@@ -12,7 +12,7 @@ try:
 except Exception:
     pass
 
-# 3. Premium Bar Counter Style Theme (CSS with Single Quotes to avoid string leak)
+# 3. Premium Bar Counter Style Theme
 st.markdown("""
     <style>
     .stApp {
@@ -27,15 +27,17 @@ st.markdown("""
     .brand-title {
         color: #f59e0b !important; 
         font-family: 'Georgia', serif; 
-        font-size: 2.2rem !important; 
+        font-size: 2.5rem !important; 
         font-weight: bold; 
+        text-align: center;
         text-shadow: 2px 2px 10px rgba(245, 158, 11, 0.3); 
         margin: 0 !important;
-        padding: 0 !important;
+        padding-top: 20px !important;
     }
     .brand-subtitle {
-        margin: 5px 0 0 0 !important; 
-        font-size: 1.2rem !important; 
+        text-align: center;
+        margin: 5px 0 20px 0 !important; 
+        font-size: 1.3rem !important; 
         color: #10b981 !important; 
         font-weight: bold !important;
     }
@@ -57,45 +59,12 @@ st.markdown("""
     
     .dispatch-btn>button { background-image: linear-gradient(135deg, #ef4444, #dc2626) !important; }
     .dispatch-btn>button p { color: white !important; }
-    
-    .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 15px 0; flex-wrap: wrap; text-align: center; }
-    .brand-text-block { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .logo-frame { border-radius: 50%; border: 3px solid #f59e0b; background-color: white; padding: 5px; box-shadow: 0px 0px 15px rgba(245, 158, 11, 0.4); }
     </style>
     """, unsafe_allow_html=True)
 
-# 4. Pure Vector Replica of Denwa Backwater Escape Official Logo (Paw & Footprint)
-logo_svg = """
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="120" height="120" class="logo-frame">
-  <circle cx="100" cy="100" r="95" fill="#ffffff" stroke="#a3821a" stroke-width="2.5"/>
-  <g fill="#8f761d" transform="translate(-5, -5)">
-    <ellipse cx="75" cy="105" rx="14" ry="17"/>
-    <circle cx="56" cy="88" r="7"/>
-    <circle cx="70" cy="76" r="7.5"/>
-    <circle cx="86" cy="78" r="7.5"/>
-    <circle cx="96" cy="92" r="7"/>
-  </g>
-  <g fill="#dfb61a" transform="translate(15, -5)">
-    <path d="M95,85 C92,95 95,115 102,125 C108,132 118,130 115,115 C112,100 106,85 95,85 Z"/>
-    <circle cx="94" cy="74" r="5.5"/>
-    <circle cx="103" cy="71" r="4.5"/>
-    <circle cx="111" cy="72" r="4"/>
-    <circle cx="118" cy="75" r="3.5"/>
-    <circle cx="123" cy="81" r="3"/>
-  </g>
-</svg>
-"""
-
-# Fixed Rendering Layout using single quotes for HTML attributes inside f-string
-st.markdown(f"""
-    <div class='header-container'>
-        {logo_svg}
-        <div class='brand-text-block'>
-            <h1 class='brand-title'>Denwa Backwater Escape</h1>
-            <p class='brand-subtitle'>Luxury AI Mixologist & Guest Assistant</p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+# 4. Clean Title Layout (Logo Completely Removed to avoid any breaks)
+st.markdown("<h1 class='brand-title'>Denwa Backwater Escape</h1>", unsafe_allow_html=True)
+st.markdown("<p class='brand-subtitle'>Luxury AI Mixologist & Guest Assistant</p>", unsafe_allow_html=True)
 
 st.caption("Crafted by Saroj Kumal | Premium Hospitality Experience")
 st.markdown("---")
@@ -121,7 +90,7 @@ recipe_title, ingredients_used, base_price = "", "", 0
 needs_ai_recipe = False
 selected_size_label = "Standard Serving"
 
-# --- Cocktails Category ---
+# --- Cocktails ---
 if menu_type == "🍹 Cocktails":
     cocktail = st.selectbox("Select Cocktail:", [
         "Select Drink", "Gauva Chilli Sour - INR 850", "Ginto - INR 850", "Bees Knees - INR 850",
@@ -136,7 +105,7 @@ if menu_type == "🍹 Cocktails":
         ingredients_used = recipe_title
         needs_ai_recipe = True
 
-# --- Mocktails Category ---
+# --- Mocktails ---
 elif menu_type == "🥤 Mocktails & Coolers":
     mocktail = st.selectbox("Select Mocktail:", [
         "Select Drink", "Ginger Limeade - INR 450", "Virgin Coco Colada - INR 450",
@@ -149,7 +118,7 @@ elif menu_type == "🥤 Mocktails & Coolers":
         ingredients_used = recipe_title
         needs_ai_recipe = True
 
-# --- Brew & Soft Beverages Category ---
+# --- Brew & Soft Beverages ---
 elif menu_type == "☕ Brew (Fresh Coffee) & Soft Beverages":
     soft = st.selectbox("Select Beverage:", [
         "Select Drink", "Cold Coffee - INR 350", "Ice Latte - INR 350",
@@ -163,7 +132,7 @@ elif menu_type == "☕ Brew (Fresh Coffee) & Soft Beverages":
         base_price = int(soft.split(" - ")[1].replace("INR ", ""))
         ingredients_used = recipe_title
 
-# --- Straight Drinks Category ---
+# --- Straight Drinks ---
 elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
     liquor = st.selectbox("Select Premium Liquor/Wine (Base 30ML price shown):", [
         "Select Drink", "Jacob's Creek (Red/White) - INR 4000", "Sula (Red/White) - INR 3500",
@@ -200,8 +169,8 @@ elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
 # --- AI Custom Mixology ---
 elif menu_type == "🔮 AI Custom Garden/Forest Mixology":
     st.write("### 🌿 Forest-to-Glass Live Creation")
-    st.info("💡 Denwa Garden / Forest items available: Fresh Mahua Bloom, Wild Jamun, Bael, Forest Mint, Gondhoraj Lime, Fresh Lemongrass, Holy Basil, Ginger & Chilli Powder.")
-    custom_ingredients = st.text_input("Enter available ingredients or forest picks (e.g., Mahua, Wild Jamun, Basil, Vodka):")
+    st.info("💡 Available: Fresh Mahua Bloom, Wild Jamun, Bael, Forest Mint, Gondhoraj Lime, Fresh Lemongrass, Holy Basil, Ginger & Chilli Powder.")
+    custom_ingredients = st.text_input("Enter available ingredients or forest picks:")
     if custom_ingredients:
         recipe_title = f"Custom Infused AI Creation"
         ingredients_used = custom_ingredients
@@ -241,8 +210,8 @@ if recipe_title and selected_room != "Select Cottage / Room / Table":
             with st.spinner("AI is crafting fresh mixology ratios..."):
                 try:
                     prompt = (
-                        f"You are Saroj Kumal, Head of Beverage at Denwa Backwater Escape resort. "
-                        f"Create a professional cocktail/mocktail recipe breakdown for: '{recipe_title}' using {ingredients_used}. "
+                        f"You are Saroj Kumal, Head of Beverage at Denwa Backwater Escape. "
+                        f"Create a professional beverage breakdown for: '{recipe_title}' using {ingredients_used}. "
                         f"Include Concept, Ratios, Infusion Method, and Luxury Garnish."
                     )
                     response = model.generate_content(prompt)
@@ -265,7 +234,7 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
     col2.metric("GST Tax (18%)", f"₹ {st.session_state['gst']:,.2f}")
     col3.metric("Grand Total (Payable)", f"₹ {st.session_state['total']:,.2f}")
     
-    photo_prompt = f"Luxury food photography of {st.session_state['photo_ing']} beverage served on a premium resort dark wooden bar counter, moody ambient studio lighting, professional setup"
+    photo_prompt = f"Luxury food photography of {st.session_state['photo_ing']} beverage served on a premium resort dark wooden bar counter, moody ambient studio lighting"
     st.image(f"https://image.pollinations.ai/p/{urllib.parse.quote(photo_prompt)}?width=1200&height=900&seed=45&model=flux", use_container_width=True)
     
     st.markdown("---")
@@ -308,4 +277,4 @@ elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Sele
     st.error("🚨 Please choose the Cottage or Table area first!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v17.6 (String Conflict Fixed)")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v18.0 (Clean Layout)")
