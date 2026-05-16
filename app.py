@@ -16,7 +16,7 @@ except Exception:
 st.markdown("""
     <style>
     .stApp {
-        background-image: linear-gradient(rgba(10, 12, 22, 0.90)), 
+        background-image: linear-gradient(rgba(10, 12, 22, 0.90), rgba(10, 12, 22, 0.90)), 
                           url("https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1600&auto=format&fit=crop");
         background-size: cover;
         background-position: center;
@@ -24,7 +24,7 @@ st.markdown("""
         background-attachment: fixed;
         color: #f1f5f9;
     }
-    h1 { color: #f59e0b !important; font-family: 'Georgia', serif; font-size: 2.6rem !important; font-weight: bold; text-shadow: 2px 2px 10px rgba(245, 158, 11, 0.3); }
+    h1 { color: #f59e0b !important; font-family: 'Georgia', serif; font-size: 2.2rem !important; font-weight: bold; text-shadow: 2px 2px 10px rgba(245, 158, 11, 0.3); margin: 0 !important; }
     h2, h3 { color: #10b981 !important; font-family: 'Georgia', serif; }
     p, span, label, div { color: #e2e8f0 !important; font-weight: 500; }
     
@@ -44,34 +44,31 @@ st.markdown("""
     .dispatch-btn>button { background-image: linear-gradient(135deg, #ef4444, #dc2626) !important; }
     .dispatch-btn>button p { color: white !important; }
     
-    .header-container { display: flex; align-items: center; justify-content: center; gap: 25px; padding: 15px 0; flex-wrap: wrap; text-align: center; }
-    .logo-frame { border-radius: 50%; border: 3px solid #f59e0b; background-color: white; padding: 3px; }
+    .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 15px 0; flex-wrap: wrap; text-align: center; }
+    .logo-frame { border-radius: 50%; border: 3px solid #f59e0b; background-color: white; padding: 5px; box-shadow: 0px 0px 15px rgba(245, 158, 11, 0.4); }
     </style>
     """, unsafe_allow_html=True)
 
-# 4. Embedded Beautiful Vector Logo Assets
+# 4. Pure Vector Replica of Denwa Backwater Escape Official Logo (Paw & Footprint)
 logo_svg = """
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="120" height="120" class="logo-frame">
-  <circle cx="100" cy="100" r="94" fill="#ffffff" stroke="#b59410" stroke-width="3"/>
-  <path d="M62,95 C55,95 50,102 52,110 C55,118 68,122 75,115 C82,108 70,95 62,95 Z" fill="#8e7f1c"/>
-  <path d="M85,75 C78,73 72,80 72,88 C72,96 85,102 91,95 C97,88 92,77 85,75 Z" fill="#8e7f1c"/>
-  <path d="M112,75 C119,73 125,80 125,88 C125,96 112,102 106,95 C100,88 105,77 112,75 Z" fill="#8e7f1c"/>
-  <path d="M135,95 C142,95 147,102 145,110 C142,118 129,122 122,115 C115,108 127,95 135,95 Z" fill="#8e7f1c"/>
-  <path d="M72,125 C72,112 85,105 100,105 C115,105 128,112 128,125 C128,140 112,148 100,148 C85,148 72,140 72,125 Z" fill="#8e7f1c"/>
-  <path d="M100,122 C95,110 102,90 108,82 C112,75 122,70 125,78 C128,85 125,105 120,120 C115,132 105,130 100,122 Z" fill="#d4af37" opacity="0.85"/>
-  <circle cx="128" cy="66" r="5" fill="#d4af37" opacity="0.85"/>
-  <circle cx="120" cy="62" r="4.5" fill="#d4af37" opacity="0.85"/>
-  <circle cx="112" cy="61" r="4" fill="#d4af37" opacity="0.85"/>
-  <circle cx="105" cy="63" r="3" fill="#d4af37" opacity="0.85"/>
+  <circle cx="100" cy="100" r="95" fill="#ffffff" stroke="#a3821a" stroke-width="2.5"/>
+  
+  <g fill="#8f761d" transform="translate(-5, -5)">
+    <ellipse cx="75" cy="105" rx="14" ry="17"/> <circle cx="56" cy="88" r="7"/>           <circle cx="70" cy="76" r="7.5"/>         <circle cx="86" cy="78" r="7.5"/>         <circle cx="96" cy="92" r="7"/>           </g>
+  
+  <g fill="#dfb61a" transform="translate(15, -5)">
+    <path d="M95,85 C92,95 95,115 102,125 C108,132 118,130 115,115 C112,100 106,85 95,85 Z"/> <circle cx="94" cy="74" r="5.5"/> <circle cx="103" cy="71" r="4.5"/> <circle cx="111" cy="72" r="4"/>   <circle cx="118" cy="75" r="3.5"/> <circle cx="123" cy="81" r="3"/>   </g>
 </svg>
 """
 
+# Render Layout Branding Title (Fixed Text Leak)
 st.markdown(f"""
     <div class="header-container">
         {logo_svg}
-        <div style="display: flex; flex-direction: column; align-items: center;">
-            <h1 style="margin: 0;">Denwa Backwater Escape</h1>
-            <p style="margin: 6px 0 0 0; font-size: 1.35rem; color: #10b981 !important; font-weight: bold;">Luxury AI Mixologist & Guest Assistant</p>
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h1>Denwa Backwater Escape</h1>
+            <p style="margin: 5px 0 0 0; font-size: 1.2rem; color: #10b981 !important; font-weight: bold;">Luxury AI Mixologist & Guest Assistant</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -100,7 +97,7 @@ recipe_title, ingredients_used, base_price = "", "", 0
 needs_ai_recipe = False
 selected_size_label = "Standard Serving"
 
-# --- Cocktails Category (Needs AI Recipe) ---
+# --- Cocktails Category ---
 if menu_type == "🍹 Cocktails":
     cocktail = st.selectbox("Select Cocktail:", [
         "Select Drink", "Gauva Chilli Sour - INR 850", "Ginto - INR 850", "Bees Knees - INR 850",
@@ -115,7 +112,7 @@ if menu_type == "🍹 Cocktails":
         ingredients_used = recipe_title
         needs_ai_recipe = True
 
-# --- Mocktails Category (Needs AI Recipe) ---
+# --- Mocktails Category ---
 elif menu_type == "🥤 Mocktails & Coolers":
     mocktail = st.selectbox("Select Mocktail:", [
         "Select Drink", "Ginger Limeade - INR 450", "Virgin Coco Colada - INR 450",
@@ -128,7 +125,7 @@ elif menu_type == "🥤 Mocktails & Coolers":
         ingredients_used = recipe_title
         needs_ai_recipe = True
 
-# --- Brew & Soft Beverages Category (NO AI Recipe Needed) ---
+# --- Brew & Soft Beverages Category ---
 elif menu_type == "☕ Brew (Fresh Coffee) & Soft Beverages":
     soft = st.selectbox("Select Beverage:", [
         "Select Drink", "Cold Coffee - INR 350", "Ice Latte - INR 350",
@@ -142,7 +139,7 @@ elif menu_type == "☕ Brew (Fresh Coffee) & Soft Beverages":
         base_price = int(soft.split(" - ")[1].replace("INR ", ""))
         ingredients_used = recipe_title
 
-# --- Straight Drinks Category (NO AI Recipe + Size Multipliers) ---
+# --- Straight Drinks Category ---
 elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
     liquor = st.selectbox("Select Premium Liquor/Wine (Base 30ML price shown):", [
         "Select Drink", "Jacob's Creek (Red/White) - INR 4000", "Sula (Red/White) - INR 3500",
@@ -160,7 +157,6 @@ elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
         base_30ml_price = int(liquor.split(" - ")[1].replace("INR ", ""))
         ingredients_used = recipe_title
         
-        # Check if item is a Bottle or Beer already, if not, show Peg Selection
         if "Beer" in recipe_title or "Jacob's" in recipe_title or "Sula" in recipe_title:
             size_choice = st.radio("Serving Size:", ["Full Bottle / Unit"])
             base_price = base_30ml_price
@@ -174,7 +170,7 @@ elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
                 base_price = base_30ml_price * 2
                 selected_size_label = "60 ML"
             elif size_choice == "Full Bottle (750 ML)":
-                base_price = base_30ml_price * 10  # Premium bottle dynamic rate factor
+                base_price = base_30ml_price * 10 
                 selected_size_label = "Full Bottle"
 
 # --- AI Custom Mixology ---
@@ -189,7 +185,6 @@ elif menu_type == "🔮 AI Custom Garden/Forest Mixology":
 
 drink_quantity = st.number_input("🔢 Enter Quantity:", min_value=1, max_value=20, value=1)
 
-# AI Model Fetcher
 def get_working_model():
     try:
         available_models = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
@@ -204,7 +199,6 @@ model = get_working_model()
 if recipe_title and selected_room != "Select Cottage / Room / Table":
     st.markdown("---")
     
-    # Custom Single Button to Process Order Draft
     if st.button("🔮 Step 1: Process & Verify Bill Structure"):
         subtotal_bill = base_price * drink_quantity
         gst_tax = round(subtotal_bill * 0.18, 2)
@@ -218,7 +212,6 @@ if recipe_title and selected_room != "Select Cottage / Room / Table":
         st.session_state['active_preview'] = True
         st.session_state['photo_ing'] = ingredients_used
         
-        # Call AI ONLY for Cocktails/Mocktails/Custom Mixes
         if needs_ai_recipe and model is not None:
             with st.spinner("AI is crafting fresh mixology ratios..."):
                 try:
@@ -232,17 +225,13 @@ if recipe_title and selected_room != "Select Cottage / Room / Table":
                 except Exception:
                     st.session_state['recipe_text'] = "Premium hand-crafted beverage selection processed successfully."
         else:
-            # Straight drinks / Waters / Soft Drinks don't output a messy recipe text
             st.session_state['recipe_text'] = f"✨ **Direct Premium Pour Service:** Serving {recipe_title} as a standard premium pour hospitality standard directly to guests."
 
 # --- VISUAL DISPLAY & CONFIRMATION ---
 if 'active_preview' in st.session_state and st.session_state['active_preview']:
     st.markdown("---")
-    
-    # Only display the detailed text instructions if relevant
     st.markdown(st.session_state['recipe_text'])
     
-    # Billing Table Breakdown (100% Correct Math with multi-quantity & peg size)
     st.markdown("### 📊 Live Bill Breakdown (18% GST Added)")
     st.write(f"**Location:** {selected_room} | **Beverage:** {st.session_state['drink_name']} ({st.session_state['size_label']})")
     
@@ -251,7 +240,6 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
     col2.metric("GST Tax (18%)", f"₹ {st.session_state['gst']:,.2f}")
     col3.metric("Grand Total (Payable)", f"₹ {st.session_state['total']:,.2f}")
     
-    # Render Beautiful Professional Food Image
     photo_prompt = f"Luxury food photography of {st.session_state['photo_ing']} beverage served on a premium resort dark wooden bar counter, moody ambient studio lighting, professional setup"
     st.image(f"https://image.pollinations.ai/p/{urllib.parse.quote(photo_prompt)}?width=1200&height=900&seed=45&model=flux", use_container_width=True)
     
@@ -262,7 +250,6 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
     if st.button("🟢 Step 2: Confirm Order & Dispatch Bill"):
         st.success(f"🎉 APPROVED! Order for {selected_room} has been synced to the main database successfully!")
         
-        # WhatsApp Dispatch Template
         msg = (
             f"🌿 *DENWA RESORT OFFICIAL ORDER* 🌿\n\n"
             f"🚪 *Location:* {selected_room}\n"
@@ -274,10 +261,8 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
         )
         st.markdown(f'<a href="https://wa.me/918305020237?text={urllib.parse.quote(msg)}" target="_blank"><button style="background-color: #25D366; color: white; width: 100%; border: none; padding: 12px; font-weight:bold; border-radius:8px; cursor:pointer;">📲 Click to Send Ticket via WhatsApp to Bar Counter</button></a>', unsafe_allow_html=True)
         
-        # Payment Gateway
         st.image("https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=DenwaBackwaterEscape", width=160, caption="Quick Scan Bill Payment")
         
-        # Accountant Log Network
         st.write("### 🏦 Accountant Real-Time Sync Network")
         st.json({
             "Timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -292,11 +277,10 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
         st.session_state['active_preview'] = False
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Field Validation Alerts
 elif recipe_title == "" and menu_type != "--- Select Category ---":
     st.warning("⚠️ Please select a valid beverage from the menu list to proceed.")
 elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Select Category ---":
     st.error("🚨 Please choose the Cottage or Table area first!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v16.0 (Dynamic Pricing & Portion Control)")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v17.0 (Official Vector Identity Restored)")
