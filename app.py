@@ -4,7 +4,7 @@ import urllib.parse
 import datetime
 
 # १. एपको लक्जरी सेटिङ
-st.set_page_config(page_title="Denwa Backwater Escape AI", page_icon="🌿", layout="centered")
+st.set_page_config(page_title="Wild Forest Mixology", page_icon="🌿", layout="centered")
 
 # २. जेमिनी एआई चाबी कन्फिगर
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
@@ -135,7 +135,7 @@ elif menu_type == "🔮 AI Custom Cocktail/Mocktail Generator":
         if custom_ingredients:
             recipe_title = f"Custom AI Creation with {custom_ingredients}"
             ingredients_used = custom_ingredients
-            base_price = 850  # एआई कस्टमाइजेसनको एउटा स्ट्यान्डर्ड प्रिमियम रेट
+            base_price = 850
             search_trigger = True
         else:
             st.warning("कृपया एआई रेसिपीका लागि सामग्रीहरूको नाम लेख्नुहोस्!")
@@ -156,18 +156,19 @@ if search_trigger:
             try:
                 # 📊 शुद्ध १८% GST ट्याक्स र टोटल हिसाब
                 subtotal_bill = base_price * drink_quantity
-                gst_tax = round(subtotal_bill * 0.18, 2)  # फिक्स १८% GST ट्याक्स
+                gst_tax = round(subtotal_bill * 0.18, 2)
                 total_payable = round(subtotal_bill + gst_tax, 2)
 
-                # 🤖 जेमिनी प्रम्प्ट - जसले पर्फेक्ट ग्लास, मेथड र इन्फ्रेडेन्ट्स निकाल्छ
+                # 🤖 नयाँ अल-इन-वन जेमिनी प्रम्प्ट (ककटेल, मकटेल र हार्ड ड्रिंक्स/वाइन सबैलाई सपोर्ट गर्ने)
                 prompt = (
                     f"You are Saroj Kumal, the elite professional Mixologist at Denwa Backwater Escape Luxury Resort. "
                     f"Provide an incredibly detailed, high-end hospitality breakdown for the beverage: '{recipe_title}'. "
-                    f"Your response must include these exact sections styled beautifully with bullet points:\n"
-                    f"- 🧾 ** Drink Name & Description**\n"
+                    f"If the item is a Straight Hard Drink (like Whisky, Vodka, Rum, Gin, Wine, or Beer), explain its heritage, best luxury mixers, recommended glassware (like Snifter, Neat, Rock glass, or Wine glass), and the perfect way to enjoy it (neat, on the rocks, etc.). "
+                    f"If it is a cocktail/mocktail, provide its full recipe. Your response must include these exact sections styled beautifully with bullet points:\n"
+                    f"- 🧾 ** Drink Name & Description/Heritage**\n"
                     f"- 🍸 ** Recommended Glassware** (Specify the exact premium glass to use)\n"
-                    f"- 🍓 ** Accurate Ingredients & Exact Measurements** (Give professional resort-style specifications)\n"
-                    f"- 🥄 ** Mixing Method & Technique** (Specify whether Shaken, Stirred, Muddled, or Built over ice)\n"
+                    f"- 🍓 ** Accurate Ingredients & Measurements/Mixers** (Give professional resort-style specifications or 30ml/60ml ideal serves)\n"
+                    f"- 🥄 ** Serving Method & Technique** (Specify whether Shaken, Stirred, Neat, On the rocks, or Built over ice)\n"
                     f"- 👅 ** Taste & Flavor Profile**\n"
                     f"- ✨ ** Saroj's Signature Garnishing & Serving Style** (Provide an elite presentation tip for Denwa Resort guests)"
                 )
@@ -223,11 +224,11 @@ if search_trigger:
                 # 💳 क्युआर कोड पेमेन्ट सेक्सन
                 st.markdown("---")
                 st.write("### 💳 Digital Quick Payment (QR Code)")
-                st.info("पाहुनाहरूले बिल भुक्तानी गर्न यो क्युআর कोड स्क्यान गर्न सक्नुहुन्छ:")
+                st.info("पाहुनाहरूले बिल भुक्तानी गर्न यो क्युआर कोड स्क्यान गर्न सक्नुहुन्छ:")
                 qr_image_url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=DenwaBackwaterEscape"
                 st.image(qr_image_url, caption="Scan to Pay - Denwa Backwater Escape", width=250)
                 
-                # 🏦 एकाउन्टेन्टको लागि डाटाबेस सिङ्क (Google Sheets को लागि विवरण)
+                # 🏦 एकाउन्टेन्टको लागि डाटाबेस सिङ्क
                 st.markdown("---")
                 st.write("### 🏦 Accountant Real-Time Sync Status")
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -250,4 +251,5 @@ if search_trigger:
         st.error("AI Configuration Error. Please contact support.")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Digital AI Platform v5.0 (Tax Fixed)")
+st.caption("© 2026 Denwa Backwater Escape | Digital AI Platform v5.5 (All Drinks Unlocked)")
+               
