@@ -16,16 +16,18 @@ st.markdown("""
     h1, h2, h3 { color: #22c55e !important; font-family: 'Georgia', serif; }
     .stButton>button { background-color: #22c55e; color: white; font-weight: bold; border-radius: 8px; width: 100%; border: none; padding: 12px; cursor: pointer; }
     .stButton>button:hover { background-color: #16a34a; }
+    .dispatch-btn>button { background-color: #e11d48 !important; }
+    .dispatch-btn>button:hover { background-color: #be123c !important; }
     </style>
     """, unsafe_allow_html=True)
 
 st.title("🌿 Denwa Backwater Escape")
-st.markdown("### 🍸 Luxury AI Mixologist & Smart Billing Platform")
+st.markdown("### 🍸 Denwa Forest-to-Glass Luxury AI Assistant")
 st.caption("Designed by Saroj Kumal | Head of Beverage Experience")
 
 st.markdown("---")
 
-# ४. कोठा, ट्री हाउस, स्ट्यान्डर्ड रुम र टेबलको आधिकारिक लिस्ट
+# ४. कोठा र टेबलको आधिकारिक लिस्ट
 room_options = ["Select Cottage / Room / Table"]
 for i in range(1, 9): room_options.append(f"🏠 Cottage {i:02d}")
 room_options.extend(["🌲 Tree House 09", "🌲 Tree House 10"])
@@ -48,7 +50,6 @@ menu_type = st.selectbox("Choose Category:", [
 ])
 
 recipe_title = ""
-search_trigger = False
 ingredients_used = ""
 base_price = 0
 is_corkage = False
@@ -67,7 +68,6 @@ if menu_type == "🍹 Denwa House Cocktails":
         recipe_title = cocktail.split(" - ")[0]
         base_price = int(cocktail.split(" - ")[1].replace("INR ", ""))
         ingredients_used = recipe_title
-        search_trigger = st.button("Process Order & Generate Recipe")
 
 # --- मकटेल मेनु ---
 elif menu_type == "🥤 Mocktails & Coolers":
@@ -80,7 +80,6 @@ elif menu_type == "🥤 Mocktails & Coolers":
         recipe_title = mocktail.split(" - ")[0]
         base_price = int(mocktail.split(" - ")[1].replace("INR ", ""))
         ingredients_used = recipe_title
-        search_trigger = st.button("Process Order & Generate Recipe")
 
 # --- कफी र सफ्ट ड्रिंक्स ---
 elif menu_type == "☕ Fresh Brew & Soft Drinks":
@@ -97,7 +96,6 @@ elif menu_type == "☕ Fresh Brew & Soft Drinks":
         recipe_title = soft.split(" - ")[0]
         base_price = int(soft.split(" - ")[1].replace("INR ", ""))
         ingredients_used = recipe_title
-        search_trigger = st.button("Process Order")
 
 # --- हार्ड ड्रिंक्स र वाइन मेनु ---
 elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
@@ -125,22 +123,18 @@ elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
             recipe_title = liquor.split(" - ")[0]
             base_price = int(liquor.split(" - ")[1].replace("INR ", ""))
         ingredients_used = recipe_title
-        search_trigger = st.button("Process Order")
 
-# --- एआई कस्टम जेनेरेटर ---
+# --- एआई कस्टम र वन-गार्डेन जेनेरेटर ---
 elif menu_type == "🔮 AI Custom Cocktail/Mocktail Generator":
-    st.write("### 🍓 AI Custom Creation")
-    custom_ingredients = st.text_input("Enter available ingredients or base preferences (e.g., Gin, Mango, Basil):")
-    if st.button("Craft Unique AI Recipe"):
-        if custom_ingredients:
-            recipe_title = f"Custom AI Creation with {custom_ingredients}"
-            ingredients_used = custom_ingredients
-            base_price = 850
-            search_trigger = True
-        else:
-            st.warning("कृपया एआई रेसिपीका लागि सामग्रीहरूको नाम लेख्नुहोस्!")
+    st.write("### 🍓 Denwa Garden & Forest Fresh Infusion")
+    st.info("💡 Denwa Garden / Forest items available: Fresh Mahua Bloom, Wild Jamun, Bael (Stone Apple), Forest Mint, Gondhoraj Lime, Fresh Lemongrass, Holy Basil (Tulsi), Ginger & Chilli Powder for Glass Rimming.")
+    custom_ingredients = st.text_input("Enter available ingredients or forest picks (e.g., Mahua, Wild Jamun, Basil, Vodka):")
+    if custom_ingredients:
+        recipe_title = f"Forest Infused AI Creation with {custom_ingredients}"
+        ingredients_used = custom_ingredients
+        base_price = 850
 
-# ६. एआई प्रोसेसिङ, १८% GST बिलिङ र ४K फोटो जेनेरेसन
+# ६. एआई प्रोसेसिङ फङ्सन
 def get_working_model():
     available_models = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
     if available_models: return genai.GenerativeModel(available_models[0])
@@ -148,108 +142,124 @@ def get_working_model():
 
 model = get_working_model()
 
-if search_trigger:
-    if selected_room == "Select Cottage / Room / Table":
-        st.error("🚨 कृपया अर्डर अगाडि बढाउन पाहुनाको कटेज, रुम वा टेबल नम्बर सेलेक्ट गर्नुहोस्!")
-    elif model:
-        with st.spinner("Denwa एआईले १८% GST बिल र प्रिमियम रेसिपी तयार पार्दैछ..."):
+# --- बटन १: पहिले रेसिपी र बिल ड्रफ्ट हेर्ने ---
+if recipe_title and selected_room != "Select Cottage / Room / Table":
+    st.markdown("---")
+    if st.button("🔮 Step 1: Generate Recipe & Preview Details"):
+        with st.spinner("Denwa एआईले प्रिमियम रेसिपी र बिलको विवरण तयार पार्दैछ..."):
             try:
-                # 📊 शुद्ध १८% GST ट्याक्स र टोटल हिसाब
+                # ट्याक्स र हिसाब स्क्रिनमा मात्र देखाउने
                 subtotal_bill = base_price * drink_quantity
                 gst_tax = round(subtotal_bill * 0.18, 2)
                 total_payable = round(subtotal_bill + gst_tax, 2)
 
-                # 🤖 नयाँ अल-इन-वन जेमिनी प्रम्प्ट (ककटेल, मकटेल र हार्ड ड्रिंक्स/वाइन सबैलाई सपोर्ट गर्ने)
+                # रेसिपी जेनेरेसन
                 prompt = (
                     f"You are Saroj Kumal, the elite professional Mixologist at Denwa Backwater Escape Luxury Resort. "
                     f"Provide an incredibly detailed, high-end hospitality breakdown for the beverage: '{recipe_title}'. "
-                    f"If the item is a Straight Hard Drink (like Whisky, Vodka, Rum, Gin, Wine, or Beer), explain its heritage, best luxury mixers, recommended glassware (like Snifter, Neat, Rock glass, or Wine glass), and the perfect way to enjoy it (neat, on the rocks, etc.). "
-                    f"If it is a cocktail/mocktail, provide its full recipe. Your response must include these exact sections styled beautifully with bullet points:\n"
-                    f"- 🧾 ** Drink Name & Description/Heritage**\n"
-                    f"- 🍸 ** Recommended Glassware** (Specify the exact premium glass to use)\n"
-                    f"- 🍓 ** Accurate Ingredients & Measurements/Mixers** (Give professional resort-style specifications or 30ml/60ml ideal serves)\n"
-                    f"- 🥄 ** Serving Method & Technique** (Specify whether Shaken, Stirred, Neat, On the rocks, or Built over ice)\n"
-                    f"- 👅 ** Taste & Flavor Profile**\n"
-                    f"- ✨ ** Saroj's Signature Garnishing & Serving Style** (Provide an elite presentation tip for Denwa Resort guests)"
+                    f"Incorporate elements of the luxury natural resort setting (Denwa Garden and nearby Forest areas). "
+                    f"Your response must include these exact sections styled beautifully with bullet points:\n"
+                    f"- 🧾 ** Drink Name & Eco-Luxury Concept**\n"
+                    f"- 🍸 ** Recommended Glassware & Forest Rimming Technique**\n"
+                    f"- 🍓 ** Accurate Ingredients & Measurements**\n"
+                    f"- 🥄 ** Mixing Method & Wilderness Infusion Technique**\n"
+                    f"- 👅 ** Taste & Aroma Profile**\n"
+                    f"- ✨ ** Saroj's Signature Natural Garnishing & Serving Style**"
                 )
                 response = model.generate_content(prompt)
                 
-                st.markdown("---")
-                st.write(response.text)
+                # सेसन स्टेटमा डेटा सेभ गर्ने ताकि अर्को बटन थिच्दा नउडोस्
+                st.session_state['recipe_output'] = response.text
+                st.session_state['subtotal'] = subtotal_bill
+                st.session_state['gst'] = gst_tax
+                st.session_state['total'] = total_payable
+                st.session_state['ingredients'] = ingredients_used
+                st.session_state['item_name'] = recipe_title
+                st.session_state['ready_to_order'] = True
                 
-                # --- प्रिमियम डिजिटल बिलिङ बक्स ---
-                st.markdown("### 📊 Official Bill Breakdown (INR)")
-                st.markdown(f"**Ordered Location:** {selected_room}")
-                col1, col2, col3 = st.columns(3)
-                col1.metric("Subtotal (Rate x Qty)", f"₹ {subtotal_bill:,.2f}")
-                col2.metric("GST Tax (18% Fixed)", f"₹ {gst_tax:,.2f}")
-                col3.metric("Grand Total Bill", f"₹ {total_payable:,.2f}")
-                
-                if is_corkage:
-                    st.warning("⚠️ यो शुल्क रिसोर्टको Corkage Policy अनुसार बाहिरबाट बोतल ल्याए बापत लगाइएको हो।")
-                st.markdown("---")
-                
-                # ४K ULTRA-HD फोटो जेनेरेटर
-                st.write("### 📸 Live 4K Presentation Preview:")
-                photo_prompt = f"A high-end 4k ultra-hd professional commercial food photography of {ingredients_used}, served in its recommended luxury glass on a premium rustic nature resort bar counter, cinematic light, photorealistic"
-                encoded_prompt = urllib.parse.quote(photo_prompt)
-                image_url = f"https://image.pollinations.ai/p/{encoded_prompt}?width=1200&height=900&seed=99&model=flux"
-                st.image(image_url, caption=f"Premium 4K Presentation Visual", use_container_width=True)
-                
-                st.markdown("---")
-                
-                # 📲 ह्वाट्सएप अर्डर अलर्ट
-                st.write("### 📲 Dispatch Order & Bill to Bar Counter")
-                whatsapp_message = (
-                    f"🌿 *NEW DENWA RESORT ORDER & BILL* 🌿\n\n"
-                    f"🚪 *Room/Table:* {selected_room}\n"
-                    f"🍹 *Item:* {recipe_title}\n"
-                    f"🔢 *Quantity:* {drink_quantity}\n"
-                    f"💰 *Subtotal:* ₹{subtotal_bill:,.2f}\n"
-                    f"✨ *GST (18%):* ₹{gst_tax:,.2f}\n"
-                    f"💵 *Grand Total:* ₹{total_payable:,.2f}\n\n"
-                    f"_Sent automatically via Denwa AI Smart System._"
-                )
-                encoded_message = urllib.parse.quote(whatsapp_message)
-                whatsapp_link = f"https://wa.me/918305020237?text={encoded_message}"
-                
-                st.markdown(f'''
-                    <a href="{whatsapp_link}" target="_blank">
-                        <button style="background-color: #25D366; color: white; font-weight: bold; font-size: 16px; border-radius: 8px; width: 100%; border: none; padding: 12px; cursor: pointer;">
-                            🟢 Send Bill & Ticket to Bar (+918305020237)
-                        </button>
-                    </a>
-                ''', unsafe_allow_html=True)
-                
-                # 💳 क्युआर कोड पेमेन्ट सेक्सन
-                st.markdown("---")
-                st.write("### 💳 Digital Quick Payment (QR Code)")
-                st.info("पाहुनाहरूले बिल भुक्तानी गर्न यो क्युआर कोड स्क्यान गर्न सक्नुहुन्छ:")
-                qr_image_url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=DenwaBackwaterEscape"
-                st.image(qr_image_url, caption="Scan to Pay - Denwa Backwater Escape", width=250)
-                
-                # 🏦 एकाउन्टेन्टको लागि डाटाबेस सिङ्क
-                st.markdown("---")
-                st.write("### 🏦 Accountant Real-Time Sync Status")
-                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                accounting_data = {
-                    "Timestamp": current_time,
-                    "Location": selected_room,
-                    "Beverage Name": recipe_title,
-                    "Quantity": drink_quantity,
-                    "Subtotal (INR)": subtotal_bill,
-                    "GST Tax (18%)": gst_tax,
-                    "Grand Total (INR)": total_payable,
-                    "Accounting Status": "LIVE SENT TO COMPUTER DATABASE"
-                }
-                st.json(accounting_data)
-                st.caption("✅ यो डेटा एकाउन्टेन्टको मुख्य बिलिङ सफ्टवेयर/कम्प्युटरमा अटो-फर्वार्ड भइसकेको छ।")
-
             except Exception as e:
                 st.error(f"Error: {e}")
-    else:
-        st.error("AI Configuration Error. Please contact support.")
+
+# --- रेसिपी र बिलको प्रिभ्यु डिस्प्ले गर्ने ---
+if 'ready_to_order' in st.session_state and st.session_state['ready_to_order']:
+    st.markdown("---")
+    st.write(st.session_state['recipe_output'])
+    
+    # बिलको प्रिभ्यु बक्स
+    st.markdown("### 📊 Draft Bill Preview (18% GST)")
+    st.write(f"**Location:** {selected_room} | **Item:** {st.session_state['item_name']} x {drink_quantity}")
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Subtotal", f"₹ {st.session_state['subtotal']:,.2f}")
+    col2.metric("GST (18% Fixed)", f"₹ {st.session_state['gst']:,.2f}")
+    col3.metric("Grand Total", f"₹ {st.session_state['total']:,.2f}")
+    
+    # ४K फोटो प्रिभ्यु
+    photo_prompt = f"A high-end 4k ultra-hd professional food photography of an eco-luxury forest cocktail with {st.session_state['ingredients']}, served in an artisan rustic glass rimmed with wild spices, premium resort wooden bar counter, cinematic lighting"
+    encoded_prompt = urllib.parse.quote(photo_prompt)
+    image_url = f"https://image.pollinations.ai/p/{encoded_prompt}?width=1200&height=900&seed=101&model=flux"
+    st.image(image_url, caption=f"Premium 4K Presentation Visual", use_container_width=True)
+    
+    st.markdown("---")
+    st.write("### 🚨 Everything Correct? Dispatch Now:")
+    
+    # --- बटन २: अब मात्र एकाउन्टेन्ट र बारमा अर्डर पठाउने ---
+    st.markdown('<div class="dispatch-btn">', unsafe_allow_html=True)
+    if st.button("🟢 Step 2: Confirm Order & Send Bill to Accountant"):
+        st.success(f"🎉 SUCCESS! Order officially sent to Accountant Computer & Bar for {selected_room}!")
+        
+        # 📲 ह्वाट्सएप लिंक जेनरेट
+        whatsapp_message = (
+                    f"🌿 *NEW CONFIRMED DENWA RESORT ORDER* 🌿\n\n"
+                    f"🚪 *Room/Table:* {selected_room}\n"
+                    f"🍹 *Item:* {st.session_state['item_name']}\n"
+                    f"🔢 *Quantity:* {drink_quantity}\n"
+                    f"💰 *Subtotal:* ₹{st.session_state['subtotal']:,.2f}\n"
+                    f"✨ *GST (18%):* ₹{st.session_state['gst']:,.2f}\n"
+                    f"💵 *Grand Total:* ₹{st.session_state['total']:,.2f}\n\n"
+                    f"_Dispatched via Saroj's Smart AI Framework._"
+                )
+        encoded_message = urllib.parse.quote(whatsapp_message)
+        whatsapp_link = f"https://wa.me/918305020237?text={encoded_message}"
+        
+        st.markdown(f'''
+            <a href="{whatsapp_link}" target="_blank">
+                <button style="background-color: #25D366; color: white; font-weight: bold; font-size: 16px; border-radius: 8px; width: 100%; border: none; padding: 12px; cursor: pointer;">
+                    📲 Open WhatsApp Ticket to Bar (+918305020237)
+                </button>
+            </a>
+        ''', unsafe_allow_html=True)
+        
+        # क्युआर कोड पेमेन्ट
+        st.markdown("---")
+        st.write("### 💳 Quick QR Payment")
+        qr_image_url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=DenwaBackwaterEscape"
+        st.image(qr_image_url, caption="Scan to Pay", width=200)
+        
+        # 🏦 एकाउन्टेन्टको लाइभ डेटा सिङ्क (एकाउन्टेन्ट स्क्रिन अलर्ट)
+        st.markdown("---")
+        st.write("### 🏦 Accountant Real-Time Sync Status")
+        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        accounting_data = {
+            "Timestamp": current_time,
+            "Location": selected_room,
+            "Beverage Name": st.session_state['item_name'],
+            "Quantity": drink_quantity,
+            "Subtotal (INR)": st.session_state['subtotal'],
+            "GST Tax (18%)": st.session_state['gst'],
+            "Grand Total (INR)": st.session_state['total'],
+            "Accounting Status": "LIVE DISPATCHED TO ACCOUNTANT COMPUTER"
+        }
+        st.json(accounting_data)
+        st.balloons()
+        
+        # अर्डर पठाइसकेपछि स्टेट क्लियर गर्ने ताकि दोहोर्‍याएर नजाओस्
+        st.session_state['ready_to_order'] = False
+    st.markdown('</div>', unsafe_allow_html=True)
+
+elif recipe_title == "" and menu_type != "--- Select Category ---":
+    st.warning("⚠️ अर्डर सुरु गर्न कृपया पहिले मेनुबाट कुनै एउटा पेय पदार्थ छान्नुहोस्।")
+elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Select Category ---":
+    st.error("🚨 कृपया अर्डर र रेसिपी हेर्नु अघि पाहुनाको कटेज, रुम वा टेबल नम्बर सेलेक्ट गर्नुहोस्!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Digital AI Platform v5.5 (All Drinks Unlocked)")
-               
+st.caption("© 2026 Denwa Backwater Escape | Digital AI Platform v6.5 (Sequence Fixed)")
