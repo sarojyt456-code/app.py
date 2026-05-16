@@ -36,16 +36,17 @@ st.markdown("""
     
     /* Responsive Header Layout for Mobile & Desktop */
     .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 20px 0; flex-wrap: wrap; text-align: center; }
-    .logo-img { border-radius: 50%; box-shadow: 0px 6px 15px rgba(0,0,0,0.6); border: 3px solid #22c55e; background-color: white; }
+    .logo-img { border-radius: 50%; box-shadow: 0px 6px 15px rgba(0,0,0,0.6); border: 3px solid #22c55e; background-color: white; object-fit: contain; }
     </style>
     """, unsafe_allow_html=True)
 
-# 4. Correct High-Resolution Logo URL
-logo_url = "https://i.ibb.co/VWVgGyy/denwa-logo.png"
+# 4. Safe GitHub Raw URL Verification
+# यसले सिधै तपाईँको गिटहब रिपोजिटरी (sarojyt456-code) बाट image_16.png तान्छ।
+logo_url = "https://raw.githubusercontent.com/sarojyt456-code/app.py/main/image_16.png"
 
 st.markdown(f"""
     <div class="header-container">
-        <img src="{logo_url}" width="160" class="logo-img">
+        <img src="{logo_url}" width="150" height="150" class="logo-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546173159-319807543181?q=80&w=200&auto=format&fit=crop';">
         <div style="display: flex; flex-direction: column; align-items: center;">
             <h1 style="margin: 0; font-size: 2.3rem;">Denwa Backwater Escape</h1>
             <p style="margin: 5px 0 0 0; font-size: 1.3rem; color: #22c55e !important; font-weight: bold;">Luxury AI Mixologist & Guest Assistant</p>
@@ -126,7 +127,7 @@ elif menu_type == "☕ Brew (Fresh Coffee) & Soft Beverages":
         base_price = int(soft.split(" - ")[1].replace("INR ", ""))
         ingredients_used = recipe_title
 
-# --- Straight Drinks Category (Updated Exact Prices) ---
+# --- Straight Drinks Category ---
 elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
     liquor = st.selectbox("Select Premium Liquor:", [
         "Select Drink", "Jacob's Creek (Red/White) - INR 4000", "Sula (Red/White) - INR 3500",
@@ -278,4 +279,4 @@ elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Sele
     st.error("🚨 Please select the Guest Cottage or Table Number before previewing the recipe!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v9.0 (Cloud Logo Integrated)")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v10.0 (GitHub Local Network Fixed)")
