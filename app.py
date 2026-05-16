@@ -34,20 +34,21 @@ st.markdown("""
     .dispatch-btn>button { background-color: #e11d48 !important; }
     .dispatch-btn>button:hover { background-color: #be123c !important; }
     
-    /* Header Logo Alignment */
-    .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; padding-bottom: 20px; }
+    /* Responsive Header Layout for Mobile & Desktop */
+    .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 20px 0; flex-wrap: wrap; text-align: center; }
+    .logo-img { border-radius: 50%; box-shadow: 0px 6px 15px rgba(0,0,0,0.6); border: 3px solid #22c55e; background-color: white; }
     </style>
     """, unsafe_allow_html=True)
 
-# 4. Premium Header with Logo and Title
-logo_url = "https://raw.githubusercontent.com/sarojyt456-code/app.py/main/image_16.png"
+# 4. Correct High-Resolution Logo URL
+logo_url = "https://i.ibb.co/VWVgGyy/denwa-logo.png"
 
 st.markdown(f"""
     <div class="header-container">
-        <img src="{logo_url}" width="120" style="border-radius: 50%; box-shadow: 0px 4px 10px rgba(0,0,0,0.5);">
-        <div style="display: flex; flex-direction: column; align-items: flex-start;">
-            <h1 style="margin: 0;">Denwa Backwater Escape</h1>
-            <p style="margin: 0; font-size: 1.2rem; color: #22c55e !important;">Luxury AI Mixologist & Guest Assistant</p>
+        <img src="{logo_url}" width="160" class="logo-img">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <h1 style="margin: 0; font-size: 2.3rem;">Denwa Backwater Escape</h1>
+            <p style="margin: 5px 0 0 0; font-size: 1.3rem; color: #22c55e !important; font-weight: bold;">Luxury AI Mixologist & Guest Assistant</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -55,7 +56,7 @@ st.markdown(f"""
 st.caption("Crafted by Saroj Kumal | Premium Hospitality Experience")
 st.markdown("---")
 
-# 5. Room & Table Selection (All to All English)
+# 5. Room & Table Selection (100% English)
 room_options = ["Select Cottage / Room / Table"]
 for i in range(1, 9): room_options.append(f"🏠 Cottage {i:02d}")
 room_options.extend(["🌲 Tree House 09", "🌲 Tree House 10"])
@@ -125,15 +126,15 @@ elif menu_type == "☕ Brew (Fresh Coffee) & Soft Beverages":
         base_price = int(soft.split(" - ")[1].replace("INR ", ""))
         ingredients_used = recipe_title
 
-# --- Straight Drinks Category ---
+# --- Straight Drinks Category (Updated Exact Prices) ---
 elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
     liquor = st.selectbox("Select Premium Liquor:", [
         "Select Drink", "Jacob's Creek (Red/White) - INR 4000", "Sula (Red/White) - INR 3500",
         "Taliskar X-Yrs - INR 900", "The Glenlivet XII-Yrs - INR 900", "The Glenfedich XII-Yrs - INR 900",
         "Imported Beer (650 ML) - INR 700", "Grey Goose Vodka - INR 700", "Indri (Indian Single Malt) - INR 700",
         "Amrut Amalgum (Indian Single Malt) - INR 700", "Indian Beer (650 ML) - INR 650",
-        "Chivas Regal XII-Yrs - INR 600", "JW Black Label XII-Yrs - INR 600", "Bombay Sapphire - INR 600",
-        "JW Red Label - INR 555", "Teacher's 50 - INR 555", "Ballantine - INR 555", "Absolut Vodka - INR 500",
+        "Chivas Regal XII-Yrs - INR 600", "JW Black Label XII-Yrs - INR 600", "JW Red Label - INR 550",
+        "Teacher's 50 - INR 550", "Ballantine - INR 550", "Absolut Vodka - INR 500",
         "Jaisalmer (Indian Craft Gin) - INR 500", "Tanqueray (London Dry Gin) - INR 500", "Jameson Irish - INR 500",
         "100-Pipers - INR 450", "Smirnoff Vodka - INR 400", "Bacardi White Rum - INR 400", "Bacardi Black Rum - INR 400",
         "Morpheus XO (Indian Brandy) - INR 400", "Camino (Tequila) - INR 400", "Old Monk - INR 300", "Mahulo (Heritage Mahua) - INR 300",
@@ -189,7 +190,7 @@ if recipe_title and selected_room != "Select Cottage / Room / Table":
                     f"- 🧾 **Drink Concept**\n"
                     f"- 🍸 **Glassware & Forest Rim Technique**\n"
                     f"- 🍓 **Ingredients & Professional Ratios**\n"
-                    f"- 숟 **Method of Infusion**\n"
+                    f"- 🥄 **Method of Infusion**\n"
                     f"- ✨ **Saroj's Signature Natural Garnish**"
                 )
                 response = model.generate_content(prompt)
@@ -277,4 +278,4 @@ elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Sele
     st.error("🚨 Please select the Guest Cottage or Table Number before previewing the recipe!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v8.0 (Logo & Sequence Fixed)")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v9.0 (Cloud Logo Integrated)")
