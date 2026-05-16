@@ -9,15 +9,26 @@ st.set_page_config(page_title="Wild Forest Mixology", page_icon="🌿", layout="
 # 2. Configure Gemini AI API Key
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 
-# 3. Premium Resort Theme & CSS Styling
+# 3. Premium Resort Theme & Full Background Image Styling
 st.markdown("""
     <style>
-    .main { background-color: #0f172a; color: #f8fafc; }
-    h1, h2, h3 { color: #22c55e !important; font-family: 'Georgia', serif; }
-    .stButton>button { background-color: #22c55e; color: white; font-weight: bold; border-radius: 8px; width: 100%; border: none; padding: 12px; cursor: pointer; }
+    .stApp {
+        background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                          url("https://images.unsplash.com/photo-1572116469696-31de0f17cc34?q=80&w=1600&auto=format&fit=crop");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: #f8fafc;
+    }
+    h1, h2, h3 { color: #22c55e !important; font-family: 'Georgia', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
+    p, span, label { color: #f1f5f9 !important; font-weight: 500; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+    .stButton>button { background-color: #22c55e; color: white; font-weight: bold; border-radius: 8px; width: 100%; border: none; padding: 12px; cursor: pointer; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); }
     .stButton>button:hover { background-color: #16a34a; }
     .dispatch-btn>button { background-color: #e11d48 !important; }
     .dispatch-btn>button:hover { background-color: #be123c !important; }
+    div[data-baseweb="select"] { background-color: rgba(30, 41, 59, 0.9) !important; border-radius: 8px; }
+    div[data-baseweb="input"] { background-color: rgba(30, 41, 59, 0.9) !important; border-radius: 8px; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -27,7 +38,7 @@ st.caption("Crafted by Saroj Kumal | Premium Hospitality Experience")
 
 st.markdown("---")
 
-# 4. Room & Table Selection (100% English)
+# 4. Room & Table Selection
 room_options = ["Select Cottage / Room / Table"]
 for i in range(1, 9): room_options.append(f"🏠 Cottage {i:02d}")
 room_options.extend(["🌲 Tree House 09", "🌲 Tree House 10"])
@@ -152,7 +163,6 @@ if recipe_title and selected_room != "Select Cottage / Room / Table":
                 gst_tax = round(subtotal_bill * 0.18, 2)
                 total_payable = round(subtotal_bill + gst_tax, 2)
 
-                # Prompt Fine-Tuning for 100% English Output
                 prompt = (
                     f"You are Saroj Kumal, Head of Beverage Experience at Denwa Backwater Escape luxury resort. "
                     f"Create an elite, professional recipe breakdown in English for: '{recipe_title}'. "
@@ -167,7 +177,6 @@ if recipe_title and selected_room != "Select Cottage / Room / Table":
                 )
                 response = model.generate_content(prompt)
                 
-                # Save to Session State
                 st.session_state['recipe_text'] = response.text
                 st.session_state['subtotal'] = subtotal_bill
                 st.session_state['gst'] = gst_tax
@@ -244,11 +253,10 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
         st.session_state['active_preview'] = False
     st.markdown('</div>', unsafe_allow_html=True)
 
-# 100% English Alert Warnings
 elif recipe_title == "" and menu_type != "--- Select Category ---":
     st.warning("⚠️ Please select a valid beverage from the menu to proceed.")
 elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Select Category ---":
     st.error("🚨 Please select the Guest Cottage or Table Number before previewing the recipe!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v7.0")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v7.5")
