@@ -9,47 +9,94 @@ st.set_page_config(page_title="Wild Forest Mixology", page_icon="🌿", layout="
 # 2. Configure Gemini AI API Key
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 
-# 3. Premium Resort Theme & Full Background Styling
+# 3. Premium Clean & White Resort Theme Styling (लोगोसँग परफेक्ट म्याच हुने ब्याकग्राउन्ड)
 st.markdown("""
     <style>
     .stApp {
-        background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
-                          url("https://images.unsplash.com/photo-1572116469696-31de0f17cc34?q=80&w=1600&auto=format&fit=crop");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        color: #f8fafc;
+        background-color: #ffffff; /* Pure White Clean Background */
+        color: #1e293b;
     }
-    h1, h2, h3 { color: #22c55e !important; font-family: 'Georgia', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
-    p, span, label, div { color: #f1f5f9 !important; font-weight: 500; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
     
-    /* Input & Select Box Rims */
-    div[data-baseweb="select"] > div { border: 2px solid #22c55e !important; border-radius: 8px !important; background-color: rgba(30, 41, 59, 0.8) !important; }
-    div[data-baseweb="input"] > div { border: 2px solid #22c55e !important; border-radius: 8px !important; background-color: rgba(30, 41, 59, 0.8) !important; }
-    div[data-baseweb="number-input"] > div { border: 2px solid #22c55e !important; border-radius: 8px !important; background-color: rgba(30, 41, 59, 0.8) !important; }
+    /* Luxury Branding Headings */
+    h1, h2, h3 { 
+        color: #16a34a !important; 
+        font-family: 'Georgia', serif; 
+        font-weight: bold;
+    }
     
-    .stButton>button { background-color: #22c55e; color: white; font-weight: bold; border-radius: 8px; width: 100%; border: none; padding: 12px; cursor: pointer; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); }
-    .stButton>button:hover { background-color: #16a34a; }
-    .dispatch-btn>button { background-color: #e11d48 !important; }
-    .dispatch-btn>button:hover { background-color: #be123c !important; }
+    /* Styling text labels to look crisp on white background */
+    p, span, label, div { 
+        color: #334155 !important; 
+        font-weight: 500; 
+    }
     
-    /* Responsive Header Layout with Round White Bordered Logo */
-    .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 20px 0; flex-wrap: wrap; text-align: center; }
-    .logo-img { border-radius: 50%; box-shadow: 0px 6px 15px rgba(0,0,0,0.6); border: 4px solid #ffffff; background-color: #ffffff; object-fit: cover; }
+    /* Input & Select Box Custom Green Rims */
+    div[data-baseweb="select"] > div { 
+        border: 2px solid #16a34a !important; 
+        border-radius: 8px !important; 
+        background-color: #f8fafc !important; 
+    }
+    div[data-baseweb="input"] > div { 
+        border: 2px solid #16a34a !important; 
+        border-radius: 8px !important; 
+        background-color: #f8fafc !important; 
+    }
+    div[data-baseweb="number-input"] > div { 
+        border: 2px solid #16a34a !important; 
+        border-radius: 8px !important; 
+        background-color: #f8fafc !important; 
+    }
+    
+    /* Buttons Styling */
+    .stButton>button { 
+        background-color: #16a34a; 
+        color: white !important; 
+        font-weight: bold; 
+        border-radius: 8px; 
+        width: 100%; 
+        border: none; 
+        padding: 12px; 
+        cursor: pointer; 
+        box-shadow: 0px 4px 10px rgba(22, 163, 74, 0.2); 
+    }
+    .stButton>button:hover { 
+        background-color: #15803d; 
+    }
+    .stButton>button p {
+        color: white !important; /* Button text stays white */
+    }
+    
+    .dispatch-btn>button { background-color: #dc2626 !important; }
+    .dispatch-btn>button:hover { background-color: #b91c1c !important; }
+    .dispatch-btn>button p { color: white !important; }
+    
+    /* Header Layout Structure */
+    .header-container { 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        gap: 25px; 
+        padding: 25px 0; 
+        flex-wrap: wrap; 
+        text-align: center;
+        background-color: #ffffff;
+    }
+    .logo-img { 
+        object-fit: contain; 
+        border-radius: 12px;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-# 4. Ultra-Reliable CDN CDN Link for image_16.png
-# यसले तपाईँको गिटहबको लोगोलाई विना कुनै अवरोध फास्ट स्पीडमा सिधै लोड गराउँछ
+# 4. Ultra-Reliable GitHub Content Delivery Network 
 logo_url = "https://cdn.jsdelivr.net/gh/sarojyt456-code/app.py@main/image_16.png"
 
 st.markdown(f"""
     <div class="header-container">
         <img src="{logo_url}" width="140" height="140" class="logo-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546173159-319807543181?q=80&w=200&auto=format&fit=crop';">
         <div style="display: flex; flex-direction: column; align-items: center;">
-            <h1 style="margin: 0; font-size: 2.3rem;">Denwa Backwater Escape</h1>
-            <p style="margin: 5px 0 0 0; font-size: 1.3rem; color: #22c55e !important; font-weight: bold;">Luxury AI Mixologist & Guest Assistant</p>
+            <h1 style="margin: 0; font-size: 2.4rem; color: #16a34a;">Denwa Backwater Escape</h1>
+            <p style="margin: 5px 0 0 0; font-size: 1.25rem; color: #15803d !important; font-weight: bold;">Luxury AI Mixologist & Guest Assistant</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -277,4 +324,4 @@ elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Sele
     st.error("🚨 Please select the Guest Cottage or Table Number before previewing the recipe!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v12.0 (CDN Absolute Fix)")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v13.0 (Pure White Executive Sync)")
