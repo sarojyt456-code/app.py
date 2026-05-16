@@ -3,13 +3,13 @@ import google.generativeai as genai
 import urllib.parse
 import datetime
 
-# 1. Luxury App Configuration
+# 1. Luxury App Configuration (Window Title & Favicon)
 st.set_page_config(page_title="Wild Forest Mixology", page_icon="🌿", layout="centered")
 
 # 2. Configure Gemini AI API Key
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 
-# 3. Premium Resort Theme & Full Background Image Styling
+# 3. Premium Resort Theme & Full Background Styling
 st.markdown("""
     <style>
     .stApp {
@@ -22,23 +22,40 @@ st.markdown("""
         color: #f8fafc;
     }
     h1, h2, h3 { color: #22c55e !important; font-family: 'Georgia', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
-    p, span, label { color: #f1f5f9 !important; font-weight: 500; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+    p, span, label, div { color: #f1f5f9 !important; font-weight: 500; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+    
+    /* Input & Select Box Rims */
+    div[data-baseweb="select"] > div { border: 2px solid #22c55e !important; border-radius: 8px !important; background-color: rgba(30, 41, 59, 0.8) !important; }
+    div[data-baseweb="input"] > div { border: 2px solid #22c55e !important; border-radius: 8px !important; background-color: rgba(30, 41, 59, 0.8) !important; }
+    div[data-baseweb="number-input"] > div { border: 2px solid #22c55e !important; border-radius: 8px !important; background-color: rgba(30, 41, 59, 0.8) !important; }
+    
     .stButton>button { background-color: #22c55e; color: white; font-weight: bold; border-radius: 8px; width: 100%; border: none; padding: 12px; cursor: pointer; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); }
     .stButton>button:hover { background-color: #16a34a; }
     .dispatch-btn>button { background-color: #e11d48 !important; }
     .dispatch-btn>button:hover { background-color: #be123c !important; }
-    div[data-baseweb="select"] { background-color: rgba(30, 41, 59, 0.9) !important; border-radius: 8px; }
-    div[data-baseweb="input"] { background-color: rgba(30, 41, 59, 0.9) !important; border-radius: 8px; }
+    
+    /* Header Logo Alignment */
+    .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; padding-bottom: 20px; }
     </style>
     """, unsafe_allow_html=True)
 
-st.title("🌿 Denwa Backwater Escape")
-st.markdown("### 🍸 Luxury AI Mixologist & Guest Assistant")
-st.caption("Crafted by Saroj Kumal | Premium Hospitality Experience")
+# 4. Premium Header with Logo and Title
+logo_url = "https://raw.githubusercontent.com/sarojyt456-code/app.py/main/image_16.png"
 
+st.markdown(f"""
+    <div class="header-container">
+        <img src="{logo_url}" width="120" style="border-radius: 50%; box-shadow: 0px 4px 10px rgba(0,0,0,0.5);">
+        <div style="display: flex; flex-direction: column; align-items: flex-start;">
+            <h1 style="margin: 0;">Denwa Backwater Escape</h1>
+            <p style="margin: 0; font-size: 1.2rem; color: #22c55e !important;">Luxury AI Mixologist & Guest Assistant</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.caption("Crafted by Saroj Kumal | Premium Hospitality Experience")
 st.markdown("---")
 
-# 4. Room & Table Selection
+# 5. Room & Table Selection (All to All English)
 room_options = ["Select Cottage / Room / Table"]
 for i in range(1, 9): room_options.append(f"🏠 Cottage {i:02d}")
 room_options.extend(["🌲 Tree House 09", "🌲 Tree House 10"])
@@ -49,7 +66,7 @@ selected_room = st.selectbox("🚪 Enter Guest Cottage / Table Number:", room_op
 
 st.markdown("---")
 
-# 5. Digital Bar Menu Setup
+# 6. Digital Bar Menu Setup
 st.write("## 📜 Digital Bar Menu")
 menu_type = st.selectbox("Choose Category:", [
     "--- Select Category ---",
@@ -172,7 +189,7 @@ if recipe_title and selected_room != "Select Cottage / Room / Table":
                     f"- 🧾 **Drink Concept**\n"
                     f"- 🍸 **Glassware & Forest Rim Technique**\n"
                     f"- 🍓 **Ingredients & Professional Ratios**\n"
-                    f"- 🥄 **Method of Infusion**\n"
+                    f"- 숟 **Method of Infusion**\n"
                     f"- ✨ **Saroj's Signature Natural Garnish**"
                 )
                 response = model.generate_content(prompt)
@@ -253,10 +270,11 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
         st.session_state['active_preview'] = False
     st.markdown('</div>', unsafe_allow_html=True)
 
+# 100% English Alert Warnings
 elif recipe_title == "" and menu_type != "--- Select Category ---":
     st.warning("⚠️ Please select a valid beverage from the menu to proceed.")
 elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Select Category ---":
     st.error("🚨 Please select the Guest Cottage or Table Number before previewing the recipe!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v7.5")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v8.0 (Logo & Sequence Fixed)")
