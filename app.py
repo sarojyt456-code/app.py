@@ -9,94 +9,74 @@ st.set_page_config(page_title="Wild Forest Mixology", page_icon="🌿", layout="
 # 2. Configure Gemini AI API Key
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 
-# 3. Premium Clean & White Resort Theme Styling (लोगोसँग परफेक्ट म्याच हुने ब्याकग्राउन्ड)
+# 3. Premium Luxury Bar Counter Theme (बारको ब्याकग्राउन्ड र म्याचिङ डार्क/गोल्ड रङ)
 st.markdown("""
     <style>
     .stApp {
-        background-color: #ffffff; /* Pure White Clean Background */
-        color: #1e293b;
+        /* Real Premium Dim-Lighted Bar Counter Background */
+        background-image: linear-gradient(rgba(10, 15, 30, 0.88), rgba(10, 15, 30, 0.88)), 
+                          url("https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1600&auto=format&fit=crop");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: #f1f5f9;
     }
     
-    /* Luxury Branding Headings */
-    h1, h2, h3 { 
-        color: #16a34a !important; 
-        font-family: 'Georgia', serif; 
-        font-weight: bold;
-    }
+    /* Elegant Title Typography matched with Gold/Green Theme */
+    h1 { color: #f59e0b !important; font-family: 'Georgia', serif; font-size: 2.5rem !important; text-shadow: 2px 2px 8px rgba(0,0,0,0.9); }
+    h2, h3 { color: #10b981 !important; font-family: 'Georgia', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+    p, span, label, div { color: #e2e8f0 !important; font-weight: 500; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); }
     
-    /* Styling text labels to look crisp on white background */
-    p, span, label, div { 
-        color: #334155 !important; 
-        font-weight: 500; 
-    }
+    /* Input Boxes Styled for Dark Bar Environment */
+    div[data-baseweb="select"] > div { border: 2px solid #f59e0b !important; border-radius: 8px !important; background-color: rgba(15, 23, 42, 0.9) !important; }
+    div[data-baseweb="input"] > div { border: 2px solid #10b981 !important; border-radius: 8px !important; background-color: rgba(15, 23, 42, 0.9) !important; }
+    div[data-baseweb="number-input"] > div { border: 2px solid #10b981 !important; border-radius: 8px !important; background-color: rgba(15, 23, 42, 0.9) !important; }
     
-    /* Input & Select Box Custom Green Rims */
-    div[data-baseweb="select"] > div { 
-        border: 2px solid #16a34a !important; 
-        border-radius: 8px !important; 
-        background-color: #f8fafc !important; 
-    }
-    div[data-baseweb="input"] > div { 
-        border: 2px solid #16a34a !important; 
-        border-radius: 8px !important; 
-        background-color: #f8fafc !important; 
-    }
-    div[data-baseweb="number-input"] > div { 
-        border: 2px solid #16a34a !important; 
-        border-radius: 8px !important; 
-        background-color: #f8fafc !important; 
-    }
-    
-    /* Buttons Styling */
+    /* Luxury Gold Buttons */
     .stButton>button { 
-        background-color: #16a34a; 
-        color: white !important; 
+        background-image: linear-gradient(135deg, #f59e0b, #d97706);
+        color: #ffffff !important; 
         font-weight: bold; 
         border-radius: 8px; 
         width: 100%; 
         border: none; 
         padding: 12px; 
         cursor: pointer; 
-        box-shadow: 0px 4px 10px rgba(22, 163, 74, 0.2); 
+        box-shadow: 0px 4px 15px rgba(245, 158, 11, 0.3); 
     }
     .stButton>button:hover { 
-        background-color: #15803d; 
+        background-image: linear-gradient(135deg, #d97706, #b45309);
+        box-shadow: 0px 6px 20px rgba(245, 158, 11, 0.5);
     }
-    .stButton>button p {
-        color: white !important; /* Button text stays white */
-    }
+    .stButton>button p { color: white !important; }
     
-    .dispatch-btn>button { background-color: #dc2626 !important; }
-    .dispatch-btn>button:hover { background-color: #b91c1c !important; }
+    .dispatch-btn>button { background-image: linear-gradient(135deg, #ef4444, #dc2626) !important; box-shadow: 0px 4px 15px rgba(239, 68, 68, 0.3) !important; }
+    .dispatch-btn>button:hover { background-image: linear-gradient(135deg, #dc2626, #b91c1c) !important; }
     .dispatch-btn>button p { color: white !important; }
     
-    /* Header Layout Structure */
-    .header-container { 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        gap: 25px; 
-        padding: 25px 0; 
-        flex-wrap: wrap; 
-        text-align: center;
-        background-color: #ffffff;
-    }
+    /* Header Layout & Blend Technique to remove Logo's White Box background */
+    .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 20px 0; flex-wrap: wrap; text-align: center; }
+    
     .logo-img { 
-        object-fit: contain; 
-        border-radius: 12px;
+        border-radius: 50%;
+        background-color: #ffffff;
+        padding: 4px;
+        box-shadow: 0px 4px 15px rgba(255,255,255,0.2);
+        object-fit: contain;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# 4. Ultra-Reliable GitHub Content Delivery Network 
-logo_url = "https://cdn.jsdelivr.net/gh/sarojyt456-code/app.py@main/image_16.png"
+# 4. Permanent Github Raw Link for Logo
+logo_url = "https://raw.githubusercontent.com/sarojyt456-code/app.py/main/image_16.png"
 
 st.markdown(f"""
     <div class="header-container">
-        <img src="{logo_url}" width="140" height="140" class="logo-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546173159-319807543181?q=80&w=200&auto=format&fit=crop';">
+        <img src="{logo_url}" width="130" height="130" class="logo-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546173159-319807543181?q=80&w=200&auto=format&fit=crop';">
         <div style="display: flex; flex-direction: column; align-items: center;">
-            <h1 style="margin: 0; font-size: 2.4rem; color: #16a34a;">Denwa Backwater Escape</h1>
-            <p style="margin: 5px 0 0 0; font-size: 1.25rem; color: #15803d !important; font-weight: bold;">Luxury AI Mixologist & Guest Assistant</p>
+            <h1 style="margin: 0;">Denwa Backwater Escape</h1>
+            <p style="margin: 5px 0 0 0; font-size: 1.3rem; color: #10b981 !important; font-weight: bold; letter-spacing: 1px;">Luxury AI Mixologist & Guest Assistant</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -324,4 +304,4 @@ elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Sele
     st.error("🚨 Please select the Guest Cottage or Table Number before previewing the recipe!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v13.0 (Pure White Executive Sync)")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v14.0 (Luxury Bar Counter & Masked Logo)")
