@@ -6,15 +6,15 @@ import datetime
 # 1. Luxury App Configuration (Window Title & Favicon)
 st.set_page_config(page_title="Wild Forest Mixology", page_icon="🌿", layout="centered")
 
-# 2. Configure Gemini AI API Key using Secrets securely
+# 2. Configure Gemini AI API Key
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 
-# 3. Master-Level CSS Custom Styling (Premium Bar Counter Mood)
+# 3. Premium Luxury Bar Counter Theme (बारको ब्याकग्राउन्ड र म्याचिङ डार्क/गोल्ड रङ)
 st.markdown("""
     <style>
-    /* Full Page Luxury Dark Bar Counter Background */
     .stApp {
-        background-image: linear-gradient(rgba(10, 12, 22, 0.88), rgba(10, 12, 22, 0.88)), 
+        /* Real Premium Dim-Lighted Bar Counter Background */
+        background-image: linear-gradient(rgba(10, 15, 30, 0.88), rgba(10, 15, 30, 0.88)), 
                           url("https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1600&auto=format&fit=crop");
         background-size: cover;
         background-position: center;
@@ -23,42 +23,17 @@ st.markdown("""
         color: #f1f5f9;
     }
     
-    /* Luxury Typography & Glowing Effects */
-    h1 { 
-        color: #f59e0b !important; 
-        font-family: 'Georgia', serif; 
-        font-size: 2.6rem !important; 
-        font-weight: bold;
-        text-shadow: 2px 2px 10px rgba(245, 158, 11, 0.2); 
-    }
-    h2, h3 { 
-        color: #10b981 !important; 
-        font-family: 'Georgia', serif; 
-        text-shadow: 1px 1px 4px rgba(0,0,0,0.7); 
-    }
-    p, span, label, div { 
-        color: #e2e8f0 !important; 
-        font-weight: 500; 
-    }
+    /* Elegant Title Typography matched with Gold/Green Theme */
+    h1 { color: #f59e0b !important; font-family: 'Georgia', serif; font-size: 2.5rem !important; text-shadow: 2px 2px 8px rgba(0,0,0,0.9); }
+    h2, h3 { color: #10b981 !important; font-family: 'Georgia', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+    p, span, label, div { color: #e2e8f0 !important; font-weight: 500; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); }
     
-    /* Input & Select Box Custom Rims for Dark Ambient */
-    div[data-baseweb="select"] > div { 
-        border: 2px solid #f59e0b !important; 
-        border-radius: 8px !important; 
-        background-color: rgba(15, 23, 42, 0.95) !important; 
-    }
-    div[data-baseweb="input"] > div { 
-        border: 2px solid #10b981 !important; 
-        border-radius: 8px !important; 
-        background-color: rgba(15, 23, 42, 0.95) !important; 
-    }
-    div[data-baseweb="number-input"] > div { 
-        border: 2px solid #10b981 !important; 
-        border-radius: 8px !important; 
-        background-color: rgba(15, 23, 42, 0.95) !important; 
-    }
+    /* Input Boxes Styled for Dark Bar Environment */
+    div[data-baseweb="select"] > div { border: 2px solid #f59e0b !important; border-radius: 8px !important; background-color: rgba(15, 23, 42, 0.9) !important; }
+    div[data-baseweb="input"] > div { border: 2px solid #10b981 !important; border-radius: 8px !important; background-color: rgba(15, 23, 42, 0.9) !important; }
+    div[data-baseweb="number-input"] > div { border: 2px solid #10b981 !important; border-radius: 8px !important; background-color: rgba(15, 23, 42, 0.9) !important; }
     
-    /* Elegant Vintage Gold Buttons */
+    /* Luxury Gold Buttons */
     .stButton>button { 
         background-image: linear-gradient(135deg, #f59e0b, #d97706);
         color: #ffffff !important; 
@@ -69,7 +44,6 @@ st.markdown("""
         padding: 12px; 
         cursor: pointer; 
         box-shadow: 0px 4px 15px rgba(245, 158, 11, 0.3); 
-        transition: all 0.3s ease;
     }
     .stButton>button:hover { 
         background-image: linear-gradient(135deg, #d97706, #b45309);
@@ -77,61 +51,32 @@ st.markdown("""
     }
     .stButton>button p { color: white !important; }
     
-    /* Crimson Urgent Dispatch Button */
-    .dispatch-btn>button { 
-        background-image: linear-gradient(135deg, #ef4444, #dc2626) !important; 
-        box-shadow: 0px 4px 15px rgba(239, 68, 68, 0.3) !important; 
-    }
-    .dispatch-btn>button:hover { 
-        background-image: linear-gradient(135deg, #dc2626, #b91c1c) !important; 
-    }
+    .dispatch-btn>button { background-image: linear-gradient(135deg, #ef4444, #dc2626) !important; box-shadow: 0px 4px 15px rgba(239, 68, 68, 0.3) !important; }
+    .dispatch-btn>button:hover { background-image: linear-gradient(135deg, #dc2626, #b91c1c) !important; }
     .dispatch-btn>button p { color: white !important; }
     
-    /* Header Structure with Clean Circular Logo Rimming */
-    .header-container { 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        gap: 25px; 
-        padding: 15px 0; 
-        flex-wrap: wrap; 
-        text-align: center; 
-    }
-    .logo-frame {
+    /* Header Layout & Blend Technique to remove Logo's White Box background */
+    .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 20px 0; flex-wrap: wrap; text-align: center; }
+    
+    .logo-img { 
         border-radius: 50%;
-        border: 3px solid #f59e0b;
-        box-shadow: 0px 0px 15px rgba(245, 158, 11, 0.4);
-        background-color: white;
-        padding: 3px;
+        background-color: #ffffff;
+        padding: 4px;
+        box-shadow: 0px 4px 15px rgba(255,255,255,0.2);
+        object-fit: contain;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# 4. High-Resolution Pure Official Vector Logo Assets (Independent of Github Uploads)
-logo_svg_vector = """
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="120" height="120" class="logo-frame">
-  <circle cx="100" cy="100" r="94" fill="#ffffff" stroke="#b59410" stroke-width="3"/>
-  <path d="M62,95 C55,95 50,102 52,110 C55,118 68,122 75,115 C82,108 70,95 62,95 Z" fill="#8e7f1c"/>
-  <path d="M85,75 C78,73 72,80 72,88 C72,96 85,102 91,95 C97,88 92,77 85,75 Z" fill="#8e7f1c"/>
-  <path d="M112,75 C119,73 125,80 125,88 C125,96 112,102 106,95 C100,88 105,77 112,75 Z" fill="#8e7f1c"/>
-  <path d="M135,95 C142,95 147,102 145,110 C142,118 129,122 122,115 C115,108 127,95 135,95 Z" fill="#8e7f1c"/>
-  <path d="M72,125 C72,112 85,105 100,105 C115,105 128,112 128,125 C128,140 112,148 100,148 C85,148 72,140 72,125 Z" fill="#8e7f1c"/>
-  <path d="M100,122 C95,110 102,90 108,82 C112,75 122,70 125,78 C128,85 125,105 120,120 C115,132 105,130 100,122 Z" fill="#d4af37" opacity="0.85"/>
-  <circle cx="128" cy="66" r="5" fill="#d4af37" opacity="0.85"/>
-  <circle cx="120" cy="62" r="4.5" fill="#d4af37" opacity="0.85"/>
-  <circle cx="112" cy="61" r="4" fill="#d4af37" opacity="0.85"/>
-  <circle cx="105" cy="63" r="3" fill="#d4af37" opacity="0.85"/>
-  <circle cx="99" cy="67" r="2.5" fill="#d4af37" opacity="0.85"/>
-</svg>
-"""
+# 4. Permanent Github Raw Link for Logo
+logo_url = "https://raw.githubusercontent.com/sarojyt456-code/app.py/main/image_16.png"
 
-# Render Layout Branding Title
 st.markdown(f"""
     <div class="header-container">
-        {logo_svg_vector}
+        <img src="{logo_url}" width="130" height="130" class="logo-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546173159-319807543181?q=80&w=200&auto=format&fit=crop';">
         <div style="display: flex; flex-direction: column; align-items: center;">
             <h1 style="margin: 0;">Denwa Backwater Escape</h1>
-            <p style="margin: 6px 0 0 0; font-size: 1.35rem; color: #10b981 !important; font-weight: bold; letter-spacing: 1px;">Luxury AI Mixologist & Guest Assistant</p>
+            <p style="margin: 5px 0 0 0; font-size: 1.3rem; color: #10b981 !important; font-weight: bold; letter-spacing: 1px;">Luxury AI Mixologist & Guest Assistant</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -139,7 +84,7 @@ st.markdown(f"""
 st.caption("Crafted by Saroj Kumal | Premium Hospitality Experience")
 st.markdown("---")
 
-# 5. Room & Table Selection (100% English Menu Match)
+# 5. Room & Table Selection (100% English)
 room_options = ["Select Cottage / Room / Table"]
 for i in range(1, 9): room_options.append(f"🏠 Cottage {i:02d}")
 room_options.extend(["🌲 Tree House 09", "🌲 Tree House 10"])
@@ -192,7 +137,7 @@ elif menu_type == "🥤 Mocktails & Coolers":
         base_price = int(mocktail.split(" - ")[1].replace("INR ", ""))
         ingredients_used = recipe_title
 
-# --- Brew & Soft Beverages Category (Direct Sync with Paper Menu) ---
+# --- Brew & Soft Beverages Category ---
 elif menu_type == "☕ Brew (Fresh Coffee) & Soft Beverages":
     soft = st.selectbox("Select Beverage:", [
         "Select Drink", "Cold Coffee - INR 350", "Ice Latte - INR 350",
@@ -208,7 +153,7 @@ elif menu_type == "☕ Brew (Fresh Coffee) & Soft Beverages":
         base_price = int(soft.split(" - ")[1].replace("INR ", ""))
         ingredients_used = recipe_title
 
-# --- Straight Drinks Category (Direct Sync with Paper Menu) ---
+# --- Straight Drinks Category ---
 elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
     liquor = st.selectbox("Select Premium Liquor:", [
         "Select Drink", "Jacob's Creek (Red/White) - INR 4000", "Sula (Red/White) - INR 3500",
@@ -244,7 +189,7 @@ elif menu_type == "🔮 AI Custom Garden/Forest Mixology":
         ingredients_used = custom_ingredients
         base_price = 850
 
-# Automated Model Dynamic Fetcher
+# Automated Model Sync
 def get_working_model():
     available_models = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
     if available_models: return genai.GenerativeModel(available_models[0])
@@ -299,7 +244,7 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
     col2.metric("GST Tax (18%)", f"₹ {st.session_state['gst']:,.2f}")
     col3.metric("Grand Total", f"₹ {st.session_state['total']:,.2f}")
     
-    # AI Drink Visualizer 
+    # 4K Visual Generation
     photo_prompt = f"Luxury food photography of an eco cocktail with {st.session_state['photo_ing']}, served in a glass rimmed with wild forest spices on a rustic resort wooden bar counter, lush jungle leaves, ultra high-res"
     encoded_prompt = urllib.parse.quote(photo_prompt)
     st.image(f"https://image.pollinations.ai/p/{encoded_prompt}?width=1200&height=900&seed=42&model=flux", caption="Premium Visual Preview", use_container_width=True)
@@ -312,7 +257,7 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
     if st.button("🟢 Step 2: Confirm Order & Dispatch Bill"):
         st.success(f"🎉 APPROVED! Order for {selected_room} has been successfully synced to the system!")
         
-        # WhatsApp Instant Dispatch Link
+        # WhatsApp Order Generation
         msg = (
             f"🌿 *DENWA RESORT OFFICIAL ORDER* 🌿\n\n"
             f"🚪 *Location:* {selected_room}\n"
@@ -332,7 +277,7 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
             </a>
         ''', unsafe_allow_html=True)
         
-        # UPI Payment Gateway Gateway
+        # Payment QR Code
         st.markdown("---")
         qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=DenwaBackwaterEscape"
         st.image(qr_url, caption="Guest Quick Scan Payment Gateway", width=180)
@@ -346,17 +291,17 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
             "Beverage_Name": st.session_state['drink_name'],
             "Quantity": drink_quantity,
             "Total_Payable_INR": st.session_state['total'],
-            "Status": "SYNCED TO MAIN DATABASE"
+            "Status": "SYNCED TO MAIN DATABASE COMPUTER"
         })
         st.balloons()
         st.session_state['active_preview'] = False
     st.markdown('</div>', unsafe_allow_html=True)
 
-# English Error Handlers
+# 100% English Alert Warnings
 elif recipe_title == "" and menu_type != "--- Select Category ---":
     st.warning("⚠️ Please select a valid beverage from the menu to proceed.")
 elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Select Category ---":
     st.error("🚨 Please select the Guest Cottage or Table Number before previewing the recipe!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v15.0 (Independent Master Vector)")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v14.0 (Luxury Bar Counter & Masked Logo)")
