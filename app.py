@@ -24,7 +24,21 @@ st.markdown("""
         background-attachment: fixed;
         color: #f1f5f9;
     }
-    h1 { color: #f59e0b !important; font-family: 'Georgia', serif; font-size: 2.2rem !important; font-weight: bold; text-shadow: 2px 2px 10px rgba(245, 158, 11, 0.3); margin: 0 !important; }
+    .brand-title {
+        color: #f59e0b !important; 
+        font-family: 'Georgia', serif; 
+        font-size: 2.2rem !important; 
+        font-weight: bold; 
+        text-shadow: 2px 2px 10px rgba(245, 158, 11, 0.3); 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .brand-subtitle {
+        margin: 5px 0 0 0 !important; 
+        font-size: 1.2rem !important; 
+        color: #10b981 !important; 
+        font-weight: bold !important;
+    }
     h2, h3 { color: #10b981 !important; font-family: 'Georgia', serif; }
     p, span, label, div { color: #e2e8f0 !important; font-weight: 500; }
     
@@ -45,6 +59,7 @@ st.markdown("""
     .dispatch-btn>button p { color: white !important; }
     
     .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 15px 0; flex-wrap: wrap; text-align: center; }
+    .brand-text-block { display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .logo-frame { border-radius: 50%; border: 3px solid #f59e0b; background-color: white; padding: 5px; box-shadow: 0px 0px 15px rgba(245, 158, 11, 0.4); }
     </style>
     """, unsafe_allow_html=True)
@@ -53,22 +68,31 @@ st.markdown("""
 logo_svg = """
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="120" height="120" class="logo-frame">
   <circle cx="100" cy="100" r="95" fill="#ffffff" stroke="#a3821a" stroke-width="2.5"/>
-  
   <g fill="#8f761d" transform="translate(-5, -5)">
-    <ellipse cx="75" cy="105" rx="14" ry="17"/> <circle cx="56" cy="88" r="7"/>           <circle cx="70" cy="76" r="7.5"/>         <circle cx="86" cy="78" r="7.5"/>         <circle cx="96" cy="92" r="7"/>           </g>
-  
+    <ellipse cx="75" cy="105" rx="14" ry="17"/>
+    <circle cx="56" cy="88" r="7"/>
+    <circle cx="70" cy="76" r="7.5"/>
+    <circle cx="86" cy="78" r="7.5"/>
+    <circle cx="96" cy="92" r="7"/>
+  </g>
   <g fill="#dfb61a" transform="translate(15, -5)">
-    <path d="M95,85 C92,95 95,115 102,125 C108,132 118,130 115,115 C112,100 106,85 95,85 Z"/> <circle cx="94" cy="74" r="5.5"/> <circle cx="103" cy="71" r="4.5"/> <circle cx="111" cy="72" r="4"/>   <circle cx="118" cy="75" r="3.5"/> <circle cx="123" cy="81" r="3"/>   </g>
+    <path d="M95,85 C92,95 95,115 102,125 C108,132 118,130 115,115 C112,100 106,85 95,85 Z"/>
+    <circle cx="94" cy="74" r="5.5"/>
+    <circle cx="103" cy="71" r="4.5"/>
+    <circle cx="111" cy="72" r="4"/>
+    <circle cx="118" cy="75" r="3.5"/>
+    <circle cx="123" cy="81" r="3"/>
+  </g>
 </svg>
 """
 
-# Render Layout Branding Title (Fixed Text Leak)
+# Clean Layout Rendering (Fixed string conflict to show the resort name perfectly)
 st.markdown(f"""
     <div class="header-container">
         {logo_svg}
-        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <h1>Denwa Backwater Escape</h1>
-            <p style="margin: 5px 0 0 0; font-size: 1.2rem; color: #10b981 !important; font-weight: bold;">Luxury AI Mixologist & Guest Assistant</p>
+        <div class="brand-text-block">
+            <h1 class="brand-title">Denwa Backwater Escape</h1>
+            <p class="brand-subtitle">Luxury AI Mixologist & Guest Assistant</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -176,7 +200,8 @@ elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
 # --- AI Custom Mixology ---
 elif menu_type == "🔮 AI Custom Garden/Forest Mixology":
     st.write("### 🌿 Forest-to-Glass Live Creation")
-    custom_ingredients = st.text_input("Enter available ingredients (e.g., Mahua, Basil, Vodka):")
+    st.info("💡 Denwa Garden / Forest items available: Fresh Mahua Bloom, Wild Jamun, Bael, Forest Mint, Gondhoraj Lime, Fresh Lemongrass, Holy Basil, Ginger & Chilli Powder.")
+    custom_ingredients = st.text_input("Enter available ingredients or forest picks (e.g., Mahua, Wild Jamun, Basil, Vodka):")
     if custom_ingredients:
         recipe_title = f"Custom Infused AI Creation"
         ingredients_used = custom_ingredients
@@ -283,4 +308,4 @@ elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Sele
     st.error("🚨 Please choose the Cottage or Table area first!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v17.0 (Official Vector Identity Restored)")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v17.5 (Syntax Leak Fixed)")
