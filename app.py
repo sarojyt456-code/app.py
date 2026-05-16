@@ -2,8 +2,6 @@ import streamlit as st
 import google.generativeai as genai
 import urllib.parse
 import datetime
-import os
-from PIL import Image
 
 # 1. Luxury App Configuration (Window Title & Favicon)
 st.set_page_config(page_title="Wild Forest Mixology", page_icon="🌿", layout="centered")
@@ -36,39 +34,30 @@ st.markdown("""
     .dispatch-btn>button { background-color: #e11d48 !important; }
     .dispatch-btn>button:hover { background-color: #be123c !important; }
     
-    /* Center layout for header */
-    .header-text { text-align: center; margin-top: -10px; }
+    /* Responsive Header Layout with Round White Bordered Logo */
+    .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 20px 0; flex-wrap: wrap; text-align: center; }
+    .logo-img { border-radius: 50%; box-shadow: 0px 6px 15px rgba(0,0,0,0.6); border: 4px solid #ffffff; background-color: #ffffff; object-fit: cover; }
     </style>
     """, unsafe_allow_html=True)
 
-# 4. Safe Local File Loading for Logo (यो तरिकाले सेतो देखिने समस्या सधैँका लागि हट्छ)
-logo_loaded = False
-try:
-    if os.path.exists("image_16.png"):
-        img = Image.open("image_16.png")
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            # स्ट्रीमलिटको आफ्नै प्रिमियम इमेज कम्पोनेन्ट प्रयोग गरेर गोलो बनाउने र देखाउने
-            st.image(img, width=160, use_container_width=False)
-        logo_loaded = True
-except Exception as e:
-    logo_loaded = False
+# 4. Ultra-Reliable CDN CDN Link for image_16.png
+# यसले तपाईँको गिटहबको लोगोलाई विना कुनै अवरोध फास्ट स्पीडमा सिधै लोड गराउँछ
+logo_url = "https://cdn.jsdelivr.net/gh/sarojyt456-code/app.py@main/image_16.png"
 
-# यदि कुनै कारणले फाइल भेटिएन भने ब्याकअप टेक्स्ट देखाउने
-if not logo_loaded:
-    st.markdown("<h1 style='text-align: center;'>🐾 Denwa Backwater Escape</h1>", unsafe_allow_html=True)
-
-st.markdown("""
-    <div class="header-text">
-        <h1 style="margin: 0; font-size: 2.3rem;">Denwa Backwater Escape</h1>
-        <p style="margin: 5px 0 0 0; font-size: 1.3rem; color: #22c55e !important; font-weight: bold;">Luxury AI Mixologist & Guest Assistant</p>
+st.markdown(f"""
+    <div class="header-container">
+        <img src="{logo_url}" width="140" height="140" class="logo-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546173159-319807543181?q=80&w=200&auto=format&fit=crop';">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <h1 style="margin: 0; font-size: 2.3rem;">Denwa Backwater Escape</h1>
+            <p style="margin: 5px 0 0 0; font-size: 1.3rem; color: #22c55e !important; font-weight: bold;">Luxury AI Mixologist & Guest Assistant</p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
 st.caption("Crafted by Saroj Kumal | Premium Hospitality Experience")
 st.markdown("---")
 
-# 5. Room & Table Selection
+# 5. Room & Table Selection (100% English)
 room_options = ["Select Cottage / Room / Table"]
 for i in range(1, 9): room_options.append(f"🏠 Cottage {i:02d}")
 room_options.extend(["🌲 Tree House 09", "🌲 Tree House 10"])
@@ -161,7 +150,7 @@ elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
         else:
             recipe_title = liquor.split(" - ")[0]
             base_price = int(liquor.split(" - ")[1].replace("INR ", ""))
-        ingredients_used = recipe_title
+        ingredients_used = liquor
 
 # --- AI Custom Mixology Category ---
 elif menu_type == "🔮 AI Custom Garden/Forest Mixology":
@@ -281,11 +270,11 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
         st.session_state['active_preview'] = False
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Alerts
+# 100% English Alert Warnings
 elif recipe_title == "" and menu_type != "--- Select Category ---":
     st.warning("⚠️ Please select a valid beverage from the menu to proceed.")
 elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Select Category ---":
     st.error("🚨 Please select the Guest Cottage or Table Number before previewing the recipe!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v11.0 (Local Storage Logo System)")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v12.0 (CDN Absolute Fix)")
