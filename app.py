@@ -12,12 +12,12 @@ try:
 except Exception:
     pass
 
-# 3. Premium Bar Counter Style Theme (CSS)
+# 3. Premium Bar Counter Style Theme (CSS with Single Quotes to avoid string leak)
 st.markdown("""
     <style>
     .stApp {
         background-image: linear-gradient(rgba(10, 12, 22, 0.90), rgba(10, 12, 22, 0.90)), 
-                          url("https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1600&auto=format&fit=crop");
+                          url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1600&auto=format&fit=crop');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -86,13 +86,13 @@ logo_svg = """
 </svg>
 """
 
-# Clean Layout Rendering (Fixed string conflict to show the resort name perfectly)
+# Fixed Rendering Layout using single quotes for HTML attributes inside f-string
 st.markdown(f"""
-    <div class="header-container">
+    <div class='header-container'>
         {logo_svg}
-        <div class="brand-text-block">
-            <h1 class="brand-title">Denwa Backwater Escape</h1>
-            <p class="brand-subtitle">Luxury AI Mixologist & Guest Assistant</p>
+        <div class='brand-text-block'>
+            <h1 class='brand-title'>Denwa Backwater Escape</h1>
+            <p class='brand-subtitle'>Luxury AI Mixologist & Guest Assistant</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -308,4 +308,4 @@ elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Sele
     st.error("🚨 Please choose the Cottage or Table area first!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v17.5 (Syntax Leak Fixed)")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v17.6 (String Conflict Fixed)")
