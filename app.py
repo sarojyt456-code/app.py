@@ -13,7 +13,7 @@ try:
 except Exception:
     pass
 
-# 3. Premium Bar Counter Style Theme with Background Fix
+# 3. Premium Bar Counter Style Theme with Strict CSS
 st.markdown("""
     <style>
     .stApp {
@@ -27,18 +27,18 @@ st.markdown("""
     }
     .brand-container {
         text-align: center;
-        padding: 20px 0;
+        padding: 10px 0;
     }
     .brand-title {
         color: #f59e0b !important; 
         font-family: 'Georgia', serif; 
-        font-size: 2.3rem !important; 
+        font-size: 2.2rem !important; 
         font-weight: bold; 
         margin-bottom: 5px !important;
         text-shadow: 2px 2px 10px rgba(245, 158, 11, 0.3);
     }
     .brand-subtitle {
-        font-size: 1.2rem !important; 
+        font-size: 1.1rem !important; 
         color: #10b981 !important; 
         font-weight: bold !important;
         margin-top: 0 !important;
@@ -64,11 +64,11 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 4. Correct Logo & Title Layout Rendering (इरर फिक्स गरिएको)
-col1, col2, col3 = st.columns([1, 2, 1])
+# 4. Premium Centered Logo Layout Fix
+col1, col2, col3 = st.columns([1, 1.5, 1])
 with col2:
-    # तपाईँको रिसोर्टको गोलो लोगो यहाँ देखिन्छ
-    st.image("https://i.ibb.co/68fDygC/Denwa-Logo.png", width=150)
+    # तपाईँले पठाउनुभएको रिसोर्टको ओरिजिनल लोगो यहाँ टक्क मिल्छ
+    st.image("https://i.ibb.co/68fDygC/Denwa-Logo.png", use_container_width=True)
 
 st.markdown("""
     <div class="brand-container">
@@ -80,9 +80,9 @@ st.markdown("""
 st.caption("Developed by Saroj Kumal | Premium Hospitality Execution")
 st.markdown("---")
 
-# 5. Guest Details & Location Track System
-st.write("### 👤 Guest Verification Details")
-guest_name = st.text_input("👤 Enter Guest Name (e.g., Mr. David):", placeholder="Type guest name here...")
+# 5. NEW FEATURE: Guest Details (Name & Location Dropdown)
+st.write("### 👤 Guest Identity & Location Tracking")
+guest_name = st.text_input("👤 Enter Guest Name (e.g., Mr. John):", placeholder="Type guest name...")
 
 room_options = ["--- Select Cottage / Room / Table ---"]
 for i in range(1, 9): room_options.append(f"🏠 Cottage {i:02d}")
@@ -90,10 +90,10 @@ room_options.extend(["🌲 Tree House 09", "🌲 Tree House 10"])
 room_options.extend(["🛏️ Standard Room 11", "🛏️ Standard Room 12", "🛏️ Standard Room 14", "🛏️ Standard Room 15"])
 for i in range(1, 6): room_options.append(f"🍽️ Dining Table {i}")
 
-selected_room = st.selectbox("🚪 Select Accurate Location:", room_options)
+selected_room = st.selectbox("🚪 Select Destination Point:", room_options)
 st.markdown("---")
 
-# 6. Digital Bar Menu Setup
+# 6. Bar Menu Database
 st.write("## 📜 Digital Bar Menu")
 menu_type = st.selectbox("Choose Category:", [
     "--- Select Category ---", "🍹 Cocktails", "🥤 Mocktails & Coolers", 
@@ -104,7 +104,7 @@ recipe_title, ingredients_used, base_price = "", "", 0
 needs_ai_recipe = False
 selected_size_label = "Standard Serving"
 
-# --- Menu Data Categories ---
+# --- Menu Data Loading ---
 if menu_type == "🍹 Cocktails":
     cocktail = st.selectbox("Select Cocktail:", [
         "Select Drink", "Gauva Chilli Sour - INR 850", "Ginto - INR 850", "Bees Knees - INR 850",
@@ -198,7 +198,7 @@ def get_working_model():
 
 model = get_working_model()
 
-# --- PROCESSING VALIDATION ---
+# --- VALIDATION ENGINE ---
 if recipe_title and selected_room != "--- Select Cottage / Room / Table ---" and guest_name.strip() != "":
     st.markdown("---")
     
@@ -230,7 +230,7 @@ if recipe_title and selected_room != "--- Select Cottage / Room / Table ---" and
         else:
             st.session_state['recipe_text'] = f"✨ **Direct Premium Pour Service:** Serving {recipe_title} as a standard premium pour hospitality standard directly to guests."
 
-# --- VISUAL DISPLAY & NOTIFICATION DISPATCH ---
+# --- SYNCED DISPATCH SYSTEM ---
 if 'active_preview' in st.session_state and st.session_state['active_preview']:
     st.markdown("---")
     st.markdown(st.session_state['recipe_text'])
@@ -253,7 +253,7 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
     st.markdown('<div class="dispatch-btn">', unsafe_allow_html=True)
     if st.button("🟢 Step 2: Confirm Order & Send Live Notification"):
         
-        # 🔔 यहाँ ntfy को शुद्ध च्यानल नाम राखिएको छ (मोबाइलसँग म्याच हुन्छ)
+        # Live push notification pipeline
         topic_name = "denwa_bar_orders_2026"
         notification_title = f"🚨 NEW ORDER: {selected_room} ({guest_name})"
         notification_message = (
@@ -261,7 +261,7 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
             f"🚪 Area/Location: {selected_room}\n"
             f"🍹 Ordered Drink: {st.session_state['drink_name']} ({st.session_state['size_label']}) x {drink_quantity}\n"
             f"💰 Total Amount: ₹{st.session_state['total']:,.2f}\n"
-            f"Logged by Saroj K."
+            f"Order Taken by Saroj Kumal"
         )
         
         try:
@@ -294,11 +294,11 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
         st.session_state['active_preview'] = False
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Validation Error Messages
+# Validation Handling
 elif recipe_title and (guest_name.strip() == "" or selected_room == "--- Select Cottage / Room / Table ---"):
     st.warning("⚠️ High Priority: Please make sure to enter both Guest Name and specific Location to proceed.")
 elif recipe_title == "" and menu_type != "--- Select Category ---":
     st.warning("⚠️ Please select a valid drink item from the categories.")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v21.0 (Strict Notification Sync Engine)")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v22.0 (Strict Notification Sync Engine)")
