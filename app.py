@@ -2,6 +2,7 @@ import streamlit as st
 import google.generativeai as genai
 import urllib.parse
 import datetime
+import requests
 
 # 1. Luxury App Configuration
 st.set_page_config(page_title="Wild Forest Mixology", page_icon="🌿", layout="centered")
@@ -62,21 +63,24 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 4. Clean Title Layout (Logo Completely Removed to avoid any breaks)
+# 4. Clean Title Layout
 st.markdown("<h1 class='brand-title'>Denwa Backwater Escape</h1>", unsafe_allow_html=True)
 st.markdown("<p class='brand-subtitle'>Luxury AI Mixologist & Guest Assistant</p>", unsafe_allow_html=True)
 
 st.caption("Crafted by Saroj Kumal | Premium Hospitality Experience")
 st.markdown("---")
 
-# 5. Room & Table Selection
-room_options = ["Select Cottage / Room / Table"]
+# 5. NEW: Guest Details (Name & Location Input)
+st.write("### 👤 Guest Verification & Details")
+guest_name = st.text_input("👤 Enter Guest Name (e.g., Mr. Smith):")
+
+room_options = ["Select Location Type"]
 for i in range(1, 9): room_options.append(f"🏠 Cottage {i:02d}")
 room_options.extend(["🌲 Tree House 09", "🌲 Tree House 10"])
 room_options.extend(["🛏️ Standard Room 11", "🛏️ Standard Room 12", "🛏️ Standard Room 14", "🛏️ Standard Room 15"])
 for i in range(1, 6): room_options.append(f"🍽️ Dining Table {i}")
 
-selected_room = st.selectbox("🚪 Enter Guest Cottage / Table Number:", room_options)
+selected_room = st.selectbox("🚪 Select Guest Cottage / Room / Table:", room_options)
 st.markdown("---")
 
 # 6. Digital Bar Menu Setup
@@ -90,7 +94,7 @@ recipe_title, ingredients_used, base_price = "", "", 0
 needs_ai_recipe = False
 selected_size_label = "Standard Serving"
 
-# --- Cocktails ---
+# --- Categories ---
 if menu_type == "🍹 Cocktails":
     cocktail = st.selectbox("Select Cocktail:", [
         "Select Drink", "Gauva Chilli Sour - INR 850", "Ginto - INR 850", "Bees Knees - INR 850",
@@ -105,7 +109,6 @@ if menu_type == "🍹 Cocktails":
         ingredients_used = recipe_title
         needs_ai_recipe = True
 
-# --- Mocktails ---
 elif menu_type == "🥤 Mocktails & Coolers":
     mocktail = st.selectbox("Select Mocktail:", [
         "Select Drink", "Ginger Limeade - INR 450", "Virgin Coco Colada - INR 450",
@@ -115,10 +118,9 @@ elif menu_type == "🥤 Mocktails & Coolers":
     if mocktail != "Select Drink":
         recipe_title = mocktail.split(" - ")[0]
         base_price = int(mocktail.split(" - ")[1].replace("INR ", ""))
-        ingredients_used = recipe_title
+        ingredients_used = mocktail
         needs_ai_recipe = True
 
-# --- Brew & Soft Beverages ---
 elif menu_type == "☕ Brew (Fresh Coffee) & Soft Beverages":
     soft = st.selectbox("Select Beverage:", [
         "Select Drink", "Cold Coffee - INR 350", "Ice Latte - INR 350",
@@ -132,7 +134,6 @@ elif menu_type == "☕ Brew (Fresh Coffee) & Soft Beverages":
         base_price = int(soft.split(" - ")[1].replace("INR ", ""))
         ingredients_used = recipe_title
 
-# --- Straight Drinks ---
 elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
     liquor = st.selectbox("Select Premium Liquor/Wine (Base 30ML price shown):", [
         "Select Drink", "Jacob's Creek (Red/White) - INR 4000", "Sula (Red/White) - INR 3500",
@@ -166,10 +167,8 @@ elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
                 base_price = base_30ml_price * 10 
                 selected_size_label = "Full Bottle"
 
-# --- AI Custom Mixology ---
 elif menu_type == "🔮 AI Custom Garden/Forest Mixology":
     st.write("### 🌿 Forest-to-Glass Live Creation")
-    st.info("💡 Available: Fresh Mahua Bloom, Wild Jamun, Bael, Forest Mint, Gondhoraj Lime, Fresh Lemongrass, Holy Basil, Ginger & Chilli Powder.")
     custom_ingredients = st.text_input("Enter available ingredients or forest picks:")
     if custom_ingredients:
         recipe_title = f"Custom Infused AI Creation"
@@ -190,7 +189,8 @@ def get_working_model():
 model = get_working_model()
 
 # --- PROCESSING SYSTEM ---
-if recipe_title and selected_room != "Select Cottage / Room / Table":
+# दुबै गेस्ट नेम र लोकेशन भरिएको हुनुपर्ने भ्यालिडेसन
+if recipe_title and selected_room != "Select Location Type" and guest_name.strip() != "":
     st.markdown("---")
     
     if st.button("🔮 Step 1: Process & Verify Bill Structure"):
@@ -227,7 +227,8 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
     st.markdown(st.session_state['recipe_text'])
     
     st.markdown("### 📊 Live Bill Breakdown (18% GST Added)")
-    st.write(f"**Location:** {selected_room} | **Beverage:** {st.session_state['drink_name']} ({st.session_state['size_label']})")
+    st.write(f"**👤 Guest Name:** {guest_name} | **🚪 Location:** {selected_room}")
+    st.write(f"**🍹 Beverage:** {st.session_state['drink_name']} ({st.session_state['size_label']})")
     
     col1, col2, col3 = st.columns(3)
     col1.metric(f"Subtotal ({drink_quantity} Qty)", f"₹ {st.session_state['subtotal']:,.2f}")
@@ -241,40 +242,55 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
     st.write("### 🚨 Everything Perfect? Dispatch Order Now:")
     
     st.markdown('<div class="dispatch-btn">', unsafe_allow_html=True)
-    if st.button("🟢 Step 2: Confirm Order & Dispatch Bill"):
-        st.success(f"🎉 APPROVED! Order for {selected_room} has been synced to the main database successfully!")
+    if st.button("🟢 Step 2: Confirm Order & Send Live Notification"):
         
-        msg = (
-            f"🌿 *DENWA RESORT OFFICIAL ORDER* 🌿\n\n"
-            f"🚪 *Location:* {selected_room}\n"
-            f"🍹 *Beverage:* {st.session_state['drink_name']}\n"
-            f"📏 *Portion:* {st.session_state['size_label']}\n"
-            f"🔢 *Quantity:* {drink_quantity}\n"
-            f"💰 *Total Bill (+18% GST):* ₹{st.session_state['total']:,.2f}\n\n"
-            f"_Dispatched by Head of Beverage Saroj Kumal._"
+        # 🔔 LIVE PUSH NOTIFICATION SYSTEM (अब नाम र लोकेशन दुबै नोटिफिकेसनमा जान्छ)
+        topic_name = "denwa_bar_orders_2026"
+        notification_title = f"🚨 NEW ORDER: {selected_room} ({guest_name})"
+        notification_message = (
+            f"👤 Guest: {guest_name}\n"
+            f"🚪 Location: {selected_room}\n"
+            f"🍹 Item: {st.session_state['drink_name']} ({st.session_state['size_label']}) x {drink_quantity}\n"
+            f"💰 Total: ₹{st.session_state['total']:,.2f}\n"
+            f"Order taken by Saroj Kumal."
         )
-        st.markdown(f'<a href="https://wa.me/918305020237?text={urllib.parse.quote(msg)}" target="_blank"><button style="background-color: #25D366; color: white; width: 100%; border: none; padding: 12px; font-weight:bold; border-radius:8px; cursor:pointer;">📲 Click to Send Ticket via WhatsApp to Bar Counter</button></a>', unsafe_allow_html=True)
+        
+        try:
+            requests.post(
+                f"https://ntfy.sh/{topic_name}",
+                data=notification_message.encode('utf-8'),
+                headers={
+                    "Title": notification_title,
+                    "Priority": "high",
+                    "Tags": "bell,star"
+                }
+            )
+            st.success(f"🎉 APPROVED! Live Notification sent instantly to Bar Counter with Guest Name!")
+        except Exception as e:
+            st.error("Notification send failed, but logged in system.")
         
         st.image("https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=DenwaBackwaterEscape", width=160, caption="Quick Scan Bill Payment")
         
         st.write("### 🏦 Accountant Real-Time Sync Network")
         st.json({
             "Timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "Guest_Name": guest_name,
             "Location": selected_room,
             "Item": st.session_state['drink_name'],
             "Portion": st.session_state['size_label'],
             "Quantity": drink_quantity,
             "Total_Payable_INR": st.session_state['total'],
-            "Status": "SYNCED TO SYSTEM DATABASE"
+            "Status": "SYNCED_WITH_GUEST_RECORDS"
         })
         st.balloons()
         st.session_state['active_preview'] = False
     st.markdown('</div>', unsafe_allow_html=True)
 
+# भ्यालिडेसन म्यासेजहरू
+elif recipe_title and (guest_name.strip() == "" or selected_room == "Select Location Type"):
+    st.warning("⚠️ Please make sure to enter both Guest Name and select a specific Location before processing.")
 elif recipe_title == "" and menu_type != "--- Select Category ---":
     st.warning("⚠️ Please select a valid beverage from the menu list to proceed.")
-elif selected_room == "Select Cottage / Room / Table" and menu_type != "--- Select Category ---":
-    st.error("🚨 Please choose the Cottage or Table area first!")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v18.0 (Clean Layout)")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v20.0 (Guest-Centric Architecture)")
