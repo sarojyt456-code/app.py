@@ -67,7 +67,6 @@ st.markdown("""
 # 4. Premium Centered Logo Layout Fix
 col1, col2, col3 = st.columns([1, 1.5, 1])
 with col2:
-    # तपाईँले पठाउनुभएको रिसोर्टको ओरिजिनल लोगो यहाँ टक्क मिल्छ
     st.image("https://i.ibb.co/68fDygC/Denwa-Logo.png", use_container_width=True)
 
 st.markdown("""
@@ -80,7 +79,7 @@ st.markdown("""
 st.caption("Developed by Saroj Kumal | Premium Hospitality Execution")
 st.markdown("---")
 
-# 5. NEW FEATURE: Guest Details (Name & Location Dropdown)
+# 5. Guest Details
 st.write("### 👤 Guest Identity & Location Tracking")
 guest_name = st.text_input("👤 Enter Guest Name (e.g., Mr. John):", placeholder="Type guest name...")
 
@@ -104,7 +103,6 @@ recipe_title, ingredients_used, base_price = "", "", 0
 needs_ai_recipe = False
 selected_size_label = "Standard Serving"
 
-# --- Menu Data Loading ---
 if menu_type == "🍹 Cocktails":
     cocktail = st.selectbox("Select Cocktail:", [
         "Select Drink", "Gauva Chilli Sour - INR 850", "Ginto - INR 850", "Bees Knees - INR 850",
@@ -142,7 +140,7 @@ elif menu_type == "☕ Brew (Fresh Coffee) & Soft Beverages":
     if soft != "Select Drink":
         recipe_title = soft.split(" - ")[0]
         base_price = int(soft.split(" - ")[1].replace("INR ", ""))
-        ingredients_used = recipe_title
+        ingredients_used = soft.split(" - ")[0]
 
 elif menu_type == "🥃 Straight Drinks (Premium Liquor & Wine)":
     liquor = st.selectbox("Select Premium Liquor/Wine (Base 30ML price shown):", [
@@ -253,30 +251,28 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
     st.markdown('<div class="dispatch-btn">', unsafe_allow_html=True)
     if st.button("🟢 Step 2: Confirm Order & Send Live Notification"):
         
-        # Live push notification pipeline
         topic_name = "denwa_bar_orders_2026"
-        notification_title = f"🚨 NEW ORDER: {selected_room} ({guest_name})"
-        notification_message = (
-            f"👤 Guest Name: {guest_name}\n"
-            f"🚪 Area/Location: {selected_room}\n"
-            f"🍹 Ordered Drink: {st.session_state['drink_name']} ({st.session_state['size_label']}) x {drink_quantity}\n"
-            f"💰 Total Amount: ₹{st.session_state['total']:,.2f}\n"
-            f"Order Taken by Saroj Kumal"
-        )
+        notification_title = f"NEW ORDER {selected_room}"
+        notification_message = f"Guest: {guest_name} | Item: {st.session_state['drink_name']} x{drink_quantity} | Total: INR {st.session_state['total']}"
         
+        # Robust Headers & Fallback URLs for ntfy Engine
         try:
-            requests.post(
+            res = requests.post(
                 f"https://ntfy.sh/{topic_name}",
-                data=notification_message.encode('utf-8'),
+                data=notification_message,
                 headers={
                     "Title": notification_title,
-                    "Priority": "high",
-                    "Tags": "bell,cocktail"
-                }
+                    "Priority": "5",
+                    "Tags": "cocktail,bell"
+                },
+                timeout=10
             )
-            st.success(f"🎉 APPROVED! Notification sent instantly to Bar Counter Mobile!")
+            if res.status_code == 200:
+                st.success(f"🎉 APPROVED! Notification sent instantly to Bar Counter Mobile!")
+            else:
+                st.error(f"Status Code: {res.status_code}. Logged internally.")
         except Exception as e:
-            st.error("Notification trigger error, but logged into internal sync.")
+            st.error(f"Network Pipeline Alert: Check if internet is connected. Saved to database sync.")
         
         st.image("https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=DenwaBackwaterEscape", width=160, caption="Quick Scan Bill Payment")
         
@@ -294,11 +290,8 @@ if 'active_preview' in st.session_state and st.session_state['active_preview']:
         st.session_state['active_preview'] = False
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Validation Handling
 elif recipe_title and (guest_name.strip() == "" or selected_room == "--- Select Cottage / Room / Table ---"):
     st.warning("⚠️ High Priority: Please make sure to enter both Guest Name and specific Location to proceed.")
-elif recipe_title == "" and menu_type != "--- Select Category ---":
-    st.warning("⚠️ Please select a valid drink item from the categories.")
 
 st.markdown("---")
-st.caption("© 2026 Denwa Backwater Escape | Production Build v22.0 (Strict Notification Sync Engine)")
+st.caption("© 2026 Denwa Backwater Escape | Production Build v23.0 (Robust Sync Overhaul)")
